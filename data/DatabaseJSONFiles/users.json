@@ -26,5 +26,39 @@
         "email": "ahmmedwahbaa@yahoo.com",
         "passwordHash": "f40d7f51f69edfaffa29c42910fbc6af6a822f1279162d486b4a7e11c3e0ae9b",
         "username": "ahmed"
+    },
+    {
+        "role": "student",
+        "enrolledCourses": [],
+        "progress": [],
+        "userId": "5",
+        "email": "email",
+        "passwordHash": "passwordHash",
+        "username": "AYmen"
+    },
+    {
+        "role": "student",
+        "enrolledCourses": [],
+        "progress": [],
+        "userId": "6",
+        "email": "email2",
+        "passwordHash": "passwordHash2",
+        "username": "Gamal"
+    },
+    {
+        "role": "instructor",
+        "createdCourses": [],
+        "userId": "7",
+        "email": "email2",
+        "passwordHash": "passwordHash2",
+        "username": "3aa"
+    },
+    {
+        "role": "instructor",
+        "createdCourses": [],
+        "userId": "8",
+        "email": "email2",
+        "passwordHash": "passwordHash2",
+        "username": "bebe"
     }
 ]
