@@ -1,8 +1,8 @@
 
 package backend.ProgramFunctions.CourseManagement;
+import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
 
 import java.util.ArrayList;
-import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
 
 public class Course {
     private String courseId;
@@ -26,8 +26,8 @@ public class Course {
     }
 
     //standard getters and setters
-    public ArrayList<String> getLessons() {
-        return Lesson;
+    public ArrayList<Lesson> getLessons() {
+        return lessons;
     }
     public void setLessons(ArrayList<Lesson> lessons) {
         this.lessons = lessons;

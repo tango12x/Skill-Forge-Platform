@@ -7,6 +7,7 @@ import backend.ProgramFunctions.UserAccountManagement.User;
 import backend.ProgramFunctions.CourseManagement.Course;
 import backend.ProgramFunctions.InstructorManagement.Instructor;
 import backend.ProgramFunctions.StudentManagement.Student;
+import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -77,11 +78,10 @@ public class CourseDatabaseManager {
             String instructorId = obj.getString("instructorId");
             String description = obj.getString("description");
             course = new Course(courseId, title, instructorId, description);
-
             JSONArray students = obj.getJSONArray("students");
             course.setStudents(JsonDatabaseManager.toStringList(students));
             JSONArray lessons = obj.getJSONArray("lessons");
-            course.setLessons();
+            course.setLessons(JSONToLesson(lessons));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,8 +99,8 @@ public class CourseDatabaseManager {
             obj.put("description", newCourse.getDescription());
 
             // optional fields if exit now
-            obj.put("lessons", newCourse.getLessons() == null ? new ArrayList<String>()
-                    : JsonDatabaseManager.toJSONArray(newCourse.getLessons()));
+            obj.put("lessons", newCourse.getLessons() == null ? new ArrayList<Lesson>()
+                    : LessonToJSON(newCourse.getLessons()));
             obj.put("students", newCourse.getStudents() == null ? new ArrayList<String>()
                     : JsonDatabaseManager.toJSONArray(newCourse.getStudents()));
             this.courses.put(obj);
@@ -121,7 +121,7 @@ public class CourseDatabaseManager {
             // optional fields if exit now
             obj.put("enrolledCourses", new ArrayList<String>());
             obj.put("lessons", updatedCourse.getLessons() == null ? new ArrayList<String>()
-                    : JsonDatabaseManager.toJSONArray(updatedCourse.getLessons()));
+                    : LessonToJSON(updatedCourse.getLessons()));
             obj.put("students", updatedCourse.getStudents() == null ? new ArrayList<String>()
                     : JsonDatabaseManager.toJSONArray(updatedCourse.getStudents()));
             this.courses.put(obj);
@@ -160,17 +160,37 @@ public class CourseDatabaseManager {
         return String.format("%d", this.courses.length() + 1);
     }
 
-    public ArrayList<Lesson> () {
-        ArrayList<Course> courseList = new ArrayList<>();
-        for (int i = 0; i < this.courses.length(); i++) {
-            JSONObject obj = this.courses.getJSONObject(i);
+    //Convert JSONArray to ArrayList<Lesson>
+    public ArrayList<Lesson> JSONToLesson(JSONArray jsonArray) {
+        ArrayList<Lesson> lessonsArray = new ArrayList<Lesson>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            String lessonId = obj.getString("lessonId");
+            String title = obj.getString("title");
+            String content = obj.getString("content");
             String courseId = obj.getString("courseId");
-            Course course = getCourse(courseId);
-            if (course != null) {
-                courseList.add(course);
-            }
+            Lesson lesson = new Lesson(lessonId, title, courseId, content);
+            lesson.setOptionalResources(JsonDatabaseManager.toStringList(obj.getJSONArray("optionalResources")));
+            lessonsArray.add(lesson);
         }
-        return courseList;
+        return lessonsArray;
+    }
+
+    //Convert ArrayList<Lesson> to JSONArray
+    public JSONArray LessonToJSON( ArrayList<Lesson> lessonsArray) {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < lessonsArray.size(); i++) {
+            Lesson obj = lessonsArray.get(i);
+            JSONObject lesson = new JSONObject();
+            lesson.put("lessonId",  obj.getLessonId());
+            lesson.put("title",  obj.getTitle());
+            lesson.put("content",  obj.getContent());
+            lesson.put("courseId",  obj.getCourseId());
+            lesson.put("optionalResources", JsonDatabaseManager.toJSONArray(obj.getOptionalResources()));
+            //add object to json array
+            jsonArray.put(lesson);
+        }
+        return jsonArray;
     }
 
     //For testing purposes only
