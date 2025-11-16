@@ -1,21 +1,51 @@
 
 package backend.ProgramFunctions.CourseManagement;
 
+import java.util.ArrayList;
+import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
+
 public class Course {
     private String courseId;
-    private String courseName;
-    private String instructorName;
+    private String title;
+    private String instructorId;
     private String description;
+    private ArrayList<Lesson> lessons;
+    private ArrayList<String> students;
 
-    public Course(String courseId, String courseName, String instructorName, String description) {
+    //CLASS CONSTRUCTOR
+    public Course(String courseId, String title, String instructorId, String description) {
         this.courseId = courseId;
-        this.courseName = courseName;
-        this.instructorName = instructorName;
+        this.title = title;
+        this.instructorId = instructorId;
         this.description = description;
     }
+    public Course(String courseId, String title, String instructorId) {
+        this.courseId = courseId;
+        this.title = title;
+        this.instructorId = instructorId;
+    }
 
+    //standard getters and setters
+    public ArrayList<String> getLessons() {
+        return Lesson;
+    }
+    public void setLessons(ArrayList<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+    public ArrayList<String> getStudents() {
+        return students;
+    }
+    public void setStudents(ArrayList<String> students) {
+        this.students = students;
+    }
     public String getCourseId() { return courseId; }
-    public String getCourseName() { return courseName; }
-    public String getInstructorName() { return instructorName; }
+    public String getTitle() { return title; }
+    public String getInstructorId() { return instructorId; }
     public String getDescription() { return description; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
