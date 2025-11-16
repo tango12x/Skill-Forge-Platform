@@ -2,8 +2,6 @@ package backend.ProgramFunctions.LessonAndLearningFeatures;
 
 import java.util.ArrayList;
 
-
-
 public class Lesson {
     private String lessonId;
     private String title;
@@ -35,7 +33,6 @@ public class Lesson {
     }
     public void setTitle(String title) {
         this.title = title;
-        this.lastModified = LocalDateTime.now();
     }
     public String getContent() {
         return content;
@@ -55,6 +52,5 @@ public class Lesson {
     public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
-
-
+    
 }
