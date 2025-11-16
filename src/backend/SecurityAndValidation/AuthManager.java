@@ -2,7 +2,10 @@ package backend.SecurityAndValidation;
 
 import java.util.ArrayList;
 
-import backend.JsonDatabaseManager.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import backend.JsonDatabaseManager.UsersDatabase;
 import backend.ProgramFunctions.InstructorManagement.*;
 import backend.ProgramFunctions.StudentManagement.*;
 import backend.ProgramFunctions.UserAccountManagement.*;
@@ -10,12 +13,13 @@ import backend.SecurityAndValidation.*;
 
 public class AuthManager {
 
-    private JsonDatabaseManager db;
+    private UsersDatabase db;
 
     public AuthManager() {
-        db = new JsonDatabaseManager();
+        db = new UsersDatabase();
     }
 
+    // LOGIN METHOD
     public User login(String email, String password) {
         // 1. Validate fields
         if (!Validator.isFilled(email) || !Validator.isFilled(password))
@@ -25,22 +29,24 @@ public class AuthManager {
             return null;
 
         // 2. Load users
-        ArrayList<User> users = db.loadUsers();
+        JSONArray users = db.getAllUsers();
 
         // 3. Hash password
         String hashed = PasswordHasher.hashPassword(password);
 
         // 4. Compare
-        for (User u : users) {
-            if (u.getEmail().equalsIgnoreCase(email) &&
-                    u.getPasswordHash().equals(hashed)) {
-                return u; // found
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject u = users.getJSONObject(i);
+            if (u.getString("email").equalsIgnoreCase(email) &&
+                    u.getString("passwordHash").equals(hashed)) {
+                return db.getUser( Integer.toString( db.SearchUserIndex( u.getString("userId") ) ) );
             }
         }
 
         return null; // not found
     }
 
+    // REGISTER METHOD TO CREATE A NEW USER
     public User register(String username, String email, String password, String role) {
 
         if (!Validator.isFilled(username) ||
@@ -52,11 +58,14 @@ public class AuthManager {
         if (!Validator.isValidEmail(email))
             return null;
 
-        ArrayList<User> users = db.loadUsers();
+        // Load users
+        JSONArray users = db.getAllUsers();
+
 
         // Check existing email
-        for (User u : users) {
-            if (u.getEmail().equalsIgnoreCase(email)) {
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject u = users.getJSONObject(i);
+            if (u.getString("email").equalsIgnoreCase(email)) {
                 return null;
             }
         }
@@ -67,15 +76,17 @@ public class AuthManager {
 
         // create correct role
         if (role.equals("student")) {
-            newUser = new Student("U" + (users.size() + 1), username, email, hashed);
+            newUser = new Student(username, email, hashed);
         } else {
-            newUser = new Instructor("U" + (users.size() + 1), username, email, hashed);
+            newUser = new Instructor(username, email, hashed);
         }
 
-        users.add(newUser);
-        db.saveUsers(users);
+        db.addUser(newUser);
+        db.SaveUsersToFile();
 
         return newUser;
     }
+
+
 
 }

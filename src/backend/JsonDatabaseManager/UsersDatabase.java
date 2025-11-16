@@ -208,6 +208,10 @@ public class UsersDatabase {
         return jsonArray;
     }
     
+    // METHOD TO RETURN ALL USERS JSON ARRAY (FOR VALIDATION PURPOSES)
+    public JSONArray getAllUsers() {
+        return this.users;
+    }
 
     //For testing purposes only
     public static void main(String[] args) {
