@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import backend.JsonDatabaseManager.UsersDatabase;
+import backend.JsonDatabaseManager.UsersDatabaseManager;
 import backend.ProgramFunctions.InstructorManagement.*;
 import backend.ProgramFunctions.StudentManagement.*;
 import backend.ProgramFunctions.UserAccountManagement.*;
@@ -13,10 +13,10 @@ import backend.SecurityAndValidation.*;
 
 public class AuthManager {
 
-    private UsersDatabase db;
+    private UsersDatabaseManager db;
 
     public AuthManager() {
-        db = new UsersDatabase();
+        db = new UsersDatabaseManager();
     }
 
     // LOGIN METHOD
