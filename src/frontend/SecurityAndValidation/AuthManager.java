@@ -37,15 +37,14 @@ public class AuthManager {
         // 4. Compare
         for (int i = 0; i < users.length(); i++) {
             JSONObject u = users.getJSONObject(i);
-            if (u.getString("email").equalsIgnoreCase(email) && u.getString("passwordHash").equals(hashed)) 
-            {
-                return db.getUser(u.getString("userId"));
+            if (u.getString("email").equalsIgnoreCase(email) &&
+                    u.getString("passwordHash").equals(hashed)) {
+                return db.getUser( Integer.toString( db.SearchUserIndex( u.getString("userId") ) ) );
             }
         }
 
         return null; // not found
     }
-
 
     // REGISTER METHOD TO CREATE A NEW USER
     public User register(String username, String email, String password, String role) {

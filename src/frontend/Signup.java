@@ -1,11 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package frontend;
 
-import Backend.AuthManager;
-import Backend.User;
+import backend.SecurityAndValidation.*;
+import backend.SecurityAndValidation.Validator;
+import backend.ProgramFunctions.UserAccountManagement.*;
+import backend.JsonDatabaseManager.*;
+
+
 
 /**
  *
@@ -30,9 +30,7 @@ public class Signup extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -41,8 +39,9 @@ public class Signup extends javax.swing.JFrame {
         PasswordTextField = new javax.swing.JTextField();
         UsernameTextField = new javax.swing.JTextField();
         signupButton = new javax.swing.JButton();
-        Studentcheekbox = new javax.swing.JCheckBox();
-        Instractorcheekbox = new javax.swing.JCheckBox();
+        radioBtnStudent = new javax.swing.JRadioButton();
+        radioBtnInstructor = new javax.swing.JRadioButton();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel2.setBackground(new java.awt.Color(0, 51, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -50,44 +49,29 @@ public class Signup extends javax.swing.JFrame {
         jLabel2.setText("Login...");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 0));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel3.setText("Username:");
+        jLabel3.setText("Username");
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 0));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel4.setText("Email:");
+        jLabel4.setText("Email");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 0));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel5.setText("Password:");
+        jLabel5.setText("Password");
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 0));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel6.setText("Signup...");
-
-        EmailTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailTextFieldActionPerformed(evt);
-            }
-        });
-
-        PasswordTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PasswordTextFieldActionPerformed(evt);
-            }
-        });
-
-        UsernameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsernameTextFieldActionPerformed(evt);
-            }
-        });
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Sign-Up");
+        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         signupButton.setBackground(new java.awt.Color(255, 255, 0));
         signupButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -99,202 +83,163 @@ public class Signup extends javax.swing.JFrame {
             }
         });
 
-        Studentcheekbox.setBackground(new java.awt.Color(255, 255, 0));
-        Studentcheekbox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Studentcheekbox.setForeground(new java.awt.Color(255, 51, 0));
-        Studentcheekbox.setText("Student");
-        Studentcheekbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StudentcheekboxActionPerformed(evt);
-            }
-        });
+        buttonGroup4.add(radioBtnStudent);
+        radioBtnStudent.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        radioBtnStudent.setSelected(true);
+        radioBtnStudent.setText("Student");
 
-        Instractorcheekbox.setBackground(new java.awt.Color(255, 255, 0));
-        Instractorcheekbox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Instractorcheekbox.setForeground(new java.awt.Color(255, 51, 0));
-        Instractorcheekbox.setText("Instractor");
-        Instractorcheekbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InstractorcheekboxActionPerformed(evt);
-            }
-        });
+        buttonGroup4.add(radioBtnInstructor);
+        radioBtnInstructor.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        radioBtnInstructor.setText("Instructor");
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 0));
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel8.setText("Role");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(signupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Studentcheekbox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Instractorcheekbox, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
-                        .addGap(20, 20, 20))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4))
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(PasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel4)
+                                .addGap(91, 91, 91)
+                                .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(76, 340, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(46, 46, 46))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(radioBtnStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(radioBtnInstructor)
+                                        .addGap(83, 83, 83))
+                                    .addComponent(PasswordTextField)
+                                    .addComponent(UsernameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(264, 264, 264)
+                        .addComponent(signupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel6)
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(UsernameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(PasswordTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-                        .addGap(17, 17, 17))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(Instractorcheekbox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Studentcheekbox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(radioBtnStudent)
+                    .addComponent(radioBtnInstructor))
+                .addGap(48, 48, 48)
                 .addComponent(signupButton)
-                .addContainerGap())
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void EmailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EmailTextFieldActionPerformed
+    // Event handler for signup button
+    private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {                  
+        AuthManager auth = new AuthManager();
+        String username = UsernameTextField.getText().trim();
+        if(!Validator.isValidUsername(username)){
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Invalid Username! It should be 3-20 characters long and can contain letters, digits, underscores, and hyphens only.");
+            return;
+        }
+        String email = EmailTextField.getText().trim();
+        if(!Validator.isValidEmail(email)){
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Invalid Email! Please enter a valid email address.");
+            return;
+        }
+        String password = PasswordTextField.getText().trim();
+        if(!Validator.isFilled(password)){
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Password cannot be empty!");
+            return;
+        }
+        String role = "";
+        if (radioBtnStudent.isSelected()) {
+                role = "student";
+        } else if (radioBtnInstructor.isSelected()) {
+                role = "instructor";
+        } 
+        //creating the user account
+        User created = auth.register(username, email, password, role);
 
-    private void PasswordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PasswordTextFieldActionPerformed
+        if (created == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Signup failed! email already used.");
+            return;
+        }
 
-    private void UsernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UsernameTextFieldActionPerformed
-
-    private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-                                             
-   AuthManager auth = new AuthManager();
-
-    String username = UsernameTextField.getText().trim();
-    String email = EmailTextField.getText().trim();
-    String password = PasswordTextField.getText().trim();
-    String role = "";
-
-    if (Studentcheekbox.isSelected()) {
-        role = "student";
-    } else if (Instractorcheekbox.isSelected()) {
-        role = "instructor";
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-                "Please select a role: Student or Instructor.");
-        return;
-    }
-
-    User created = auth.register(username, email, password, role);
-
-    if (created == null) {
         javax.swing.JOptionPane.showMessageDialog(this,
-                "Signup failed! Fields invalid or email already used.");
-        return;
+                "Account created successfully! You can now log in.");
+
+
+        Login frame = new Login();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        this.dispose();
     }
 
-    javax.swing.JOptionPane.showMessageDialog(this,
-            "Account created successfully! You can now log in.");
-
-    new Login().setVisible(true);
-    this.dispose();
-    }//GEN-LAST:event_signupButtonActionPerformed
-
-    private void InstractorcheekboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InstractorcheekboxActionPerformed
-        if (Instractorcheekbox.isSelected()) {
-        Studentcheekbox.setSelected(false);
-}
-
-    }//GEN-LAST:event_InstractorcheekboxActionPerformed
-
-    private void StudentcheekboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentcheekboxActionPerformed
-        if (Studentcheekbox.isSelected()) {
-        Instractorcheekbox.setSelected(false);
-    
-}
-    }//GEN-LAST:event_StudentcheekboxActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Signup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Signup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Signup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Signup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Signup().setVisible(true);
+                Signup frame = new Signup();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField EmailTextField;
-    private javax.swing.JCheckBox Instractorcheekbox;
     private javax.swing.JTextField PasswordTextField;
-    private javax.swing.JCheckBox Studentcheekbox;
     private javax.swing.JTextField UsernameTextField;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JRadioButton radioBtnInstructor;
+    private javax.swing.JRadioButton radioBtnStudent;
     private javax.swing.JButton signupButton;
     // End of variables declaration//GEN-END:variables
 }

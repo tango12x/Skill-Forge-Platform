@@ -194,5 +194,23 @@
         "email": "email2",
         "passwordHash": "passwordHash2",
         "username": "3aa"
+    },
+    {
+        "role": "student",
+        "enrolledCourses": [],
+        "progress": [],
+        "userId": "U25",
+        "email": "galaltaman@gmail.com",
+        "passwordHash": "c62fce5bb0e0d796fd8f4efe8f59c300635d888b7dda2ad67db16b72140edc1f",
+        "username": "GalalTaman123x"
+    },
+    {
+        "role": "student",
+        "enrolledCourses": [],
+        "progress": [],
+        "userId": "U26",
+        "email": "ayman@gmail.com",
+        "passwordHash": "c92ac652abe8b01096afe71e1aace892f09fbdbe8ac17836bbb5f4a4f55c13a2",
+        "username": "galal"
     }
 ]
