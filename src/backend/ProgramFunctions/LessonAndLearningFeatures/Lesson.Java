@@ -10,7 +10,7 @@ public class Lesson {
     private ArrayList<String> optionalResources;
 
 
-    //CLASS CONSTRUCTOR
+    //CLASS CONSTRUCTOR IN CASE CONTENT IS PROVIDED
     public Lesson(String lessonId, String title, String courseId, String content) {
         this.lessonId = lessonId;
         this.title = title;
@@ -18,6 +18,7 @@ public class Lesson {
         this.content = content;
         this.optionalResources = new ArrayList<String>();
     }
+    //OVERLOADING CONSTRUCTOR IN CASE OF CONTENT IS NOT PROVIDED
     public Lesson(String lessonId, String title, String courseId) {
         this.lessonId = lessonId;
         this.title = title;
