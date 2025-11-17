@@ -71,4 +71,15 @@ public class Course {
                 lessons.remove(i);
                 return;}}}
 
+    //METHOD TO EDIT SPECIFIC LESSON
+    public void editLesson(String oldLessonId, Lesson newLesson) {
+        if (oldLessonId == null || newLesson == null) return;
+        if (oldLessonId.trim().isEmpty()) return;
+        for (int i = 0; i < lessons.size(); i++) {
+            if (lessons.get(i).getLessonId().equals(oldLessonId)) {
+                if (!newLesson.getLessonId().equals(oldLessonId)) return;
+                lessons.set(i, newLesson);
+                return;}}}
+
+
 }
