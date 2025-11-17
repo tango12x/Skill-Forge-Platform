@@ -1,5 +1,7 @@
 package backend.ProgramFunctions.LessonAndLearningFeatures;
 
+import backend.SecurityAndValidation.Validator;
+
 import java.util.ArrayList;
 
 public class Lesson {
@@ -62,4 +64,11 @@ public class Lesson {
     public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
+
+    //METHOD TO ADD RESOURCES( URL )  TO THE LESSONS
+    public void addResource(String url) {
+        if (!optionalResources.contains(url)) {
+            optionalResources.add(url);}}
+
+
 }

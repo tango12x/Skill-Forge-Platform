@@ -56,4 +56,30 @@ public class Course {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //METHOD TO ADD LESSON
+    public void addLesson(Lesson lesson) {
+        if (lesson == null) return;
+        if (lessons.contains(lesson)) return;
+        lessons.add(lesson);}
+
+    //METHOD TO REMOVE LESSON
+    public void removeLesson(String lessonId) {
+        if (lessonId == null || lessonId.trim().isEmpty()) return;
+        for (int i = 0; i < lessons.size(); i++) {
+            if (lessons.get(i).getLessonId().equals(lessonId)) {
+                lessons.remove(i);
+                return;}}}
+
+    //METHOD TO EDIT SPECIFIC LESSON
+    public void editLesson(String oldLessonId, Lesson newLesson) {
+        if (oldLessonId == null || newLesson == null) return;
+        if (oldLessonId.trim().isEmpty()) return;
+        for (int i = 0; i < lessons.size(); i++) {
+            if (lessons.get(i).getLessonId().equals(oldLessonId)) {
+                if (!newLesson.getLessonId().equals(oldLessonId)) return;
+                lessons.set(i, newLesson);
+                return;}}}
+
+
 }
