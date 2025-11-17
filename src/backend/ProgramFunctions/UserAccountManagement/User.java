@@ -7,7 +7,7 @@ public abstract class User {
     private String email;
     private String passwordHash;
 
-    //CLASS CONSTRUCTOR
+    //CLASS CONSTRUCTOR IN CASE THE USERID IS GIVEN
     public User(String userId, String role, String username, String email, String passwordHash) {
         this.userId = userId;
         this.role = role;
@@ -15,6 +15,7 @@ public abstract class User {
         this.email = email;
         this.passwordHash = passwordHash;
     }
+    //OVERLOADING CLASS CONSTRUCTOR IN CASE OF ID IS NOT GIVEN
     public User( String role, String username, String email, String passwordHash) {
         this.role = role;
         this.username = username;
