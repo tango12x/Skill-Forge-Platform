@@ -50,6 +50,10 @@ public class Validator {
                     (c >= '0' && c <= '9') ||
                     c == '_' || c == '-')) {
                 return false;}}
-        return true;
+        return true;}
+
+    //Matching password validation when signing up
+    public static boolean passwordsMatch(String pass1, String pass2) {
+        return pass1 != null && pass1.equals(pass2);
     }
 }
