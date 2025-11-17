@@ -7,13 +7,16 @@ import java.util.ArrayList;
 public class Student extends User {
     private ArrayList<String> enrolledCourses;
     private ArrayList<ArrayList<String>> progress;
+    //RELATION BETWEEN COURSES AND STUDENT IS AGGREGATION
+    //RELATION BETWEEN PROGRESS AND STUDENT IS AGGREGATION
 
-    //CLASS CONSTRUCTOR
+    //CLASS CONSTRUCTOR IN CASE OF ID IS GIVEN
     public Student(String userId, String username, String email, String passwordHash) {
         super(userId, "student", username, email, passwordHash);
         this.enrolledCourses = new ArrayList<String>();
         this.progress = new ArrayList<ArrayList<String>>();
     }
+    //OVERLOADING CONSTRUCTOR IN CASE OF ID IS NOT GIVEN
     public Student(String username, String email, String passwordHash) {
         super("student", username, email, passwordHash);
         this.enrolledCourses = new ArrayList<String>();
