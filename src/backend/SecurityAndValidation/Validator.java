@@ -18,4 +18,13 @@ public class Validator {
         int dotIndex = domainPart.indexOf('.');
         if (dotIndex <= 0 || dotIndex == domainPart.length() - 1) return false;
         return domainPart.substring(dotIndex + 1).length() >= 2;}
+
+    // course description validation
+    public static boolean isValidCourseDescription(String desc) {
+        if (!isFilled(desc)) return false;
+        if (desc.length() < 10 || desc.length() > 1000) return false;
+        String forbidden = "<>&;";
+        for (char c : desc.toCharArray()) {
+            if (forbidden.indexOf(c) != -1) return false;}
+        return true;}
 }
