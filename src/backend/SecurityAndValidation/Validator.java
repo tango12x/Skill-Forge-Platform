@@ -63,4 +63,12 @@ public class Validator {
         String lower = role.toLowerCase().trim();
         return "student".equals(lower) || "instructor".equals(lower);
     }
+
+    //RESOURCE VALIDATION
+    public static boolean isValidUrl(String url) {
+        if (!isFilled(url)) return true; // optional
+        String lower = url.toLowerCase().trim();
+        return lower.startsWith("http://") ||
+                lower.startsWith("https://") ||
+                lower.startsWith("www.");}
 }
