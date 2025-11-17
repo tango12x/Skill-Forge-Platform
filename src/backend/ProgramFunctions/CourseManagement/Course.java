@@ -11,8 +11,11 @@ public class Course {
     private String description;
     private ArrayList<Lesson> lessons;
     private ArrayList<String> students;
+    //RELATION BETWEEN THE COURSE AND LESSON COMPOSITION
+    //RELATION BETWEEN THE COURSE AND STUDENT AGGREGATION
+    //RELATION BETWEEN THE COURSE AND INSTRUCTOR IS AGGREGATION
 
-    //CLASS CONSTRUCTOR
+    //CLASS CONSTRUCTOR IN CASE OF DESCRIPTION IS GIVEN
     public Course(String courseId, String title, String instructorId, String description) {
         this.courseId = courseId;
         this.title = title;
@@ -21,6 +24,7 @@ public class Course {
         this.lessons = new ArrayList<Lesson>();
         this.students = new ArrayList<String>();
     }
+    //OVERLOADING CONSTRUCTOR IN CASE THAT DESCRIPTION IS NOT GIVEN
     public Course(String title, String instructorId, String description) {
         this.title = title;
         this.instructorId = instructorId;
