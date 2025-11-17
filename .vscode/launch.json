@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "login",
+            "request": "launch",
+            "mainClass": "login",
+            "projectName": "OOP-Lab-7_434d5622"
+        },
+        {
+            "type": "java",
             "name": "Run Current File",
             "request": "launch",
             "mainClass": "${file}",
