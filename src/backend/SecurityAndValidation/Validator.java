@@ -31,5 +31,12 @@ public class Validator {
     //lesson title validation
     public static boolean isValidLessonTitle(String title) {
         return isFilled(title) && title.length() >= 3 && title.length() <= 150;}
-    
+    //course title validation
+    public static boolean isValidCourseTitle(String title) {
+        if (!isFilled(title)) return false;
+        if (title.length() < 5 || title.length() > 100) return false;
+        String forbidden = "<>\"&;";
+        for (char c : title.toCharArray()) {
+            if (forbidden.indexOf(c) != -1) return false;}
+        return true;}
 }
