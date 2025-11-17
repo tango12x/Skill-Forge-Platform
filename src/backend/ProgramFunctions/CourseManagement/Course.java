@@ -56,4 +56,13 @@ public class Course {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //METHOD TO ADD LESSON
+    public void addLesson(Lesson lesson) {
+        if (lesson == null) return;
+        if (lessons.contains(lesson)) return;
+        lessons.add(lesson);}
+
+    //METHOD TO REMOVE LESSON
+    
 }
