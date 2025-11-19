@@ -1,7 +1,7 @@
 [
     {
         "description": "Learn Java.",
-        "students": [],
+        "students": ["U25"],
         "title": "Java Basics",
         "courseId": "C1",
         "lessons": [
@@ -20,23 +20,23 @@
                 "content": "Content 2"
             }
         ],
-        "instructorId": "Dr. Ahmed"
+        "instructorId": "U2"
     },
     {
         "description": "Understand OOP.",
-        "students": [],
+        "students": ["U25"],
         "title": "OOP Fundamentals",
         "courseId": "C2",
         "lessons": [],
-        "instructorId": "Prof. Sara"
+        "instructorId": "U4"
     },
     {
         "description": "Intro to SQL.",
-        "students": [],
+        "students": ["U25"],
         "title": "Databases 101",
         "courseId": "C3",
         "lessons": [],
-        "instructorId": "Dr. Ali"
+        "instructorId": "U8"
     },
     {
         "description": "Learn common data structures.",
@@ -44,7 +44,7 @@
         "title": "Data Structures",
         "courseId": "C4",
         "lessons": [],
-        "instructorId": "Dr. Mona"
+        "instructorId": "U2"
     },
     {
         "description": "HTML, CSS basics.",
@@ -52,7 +52,7 @@
         "title": "Web Development",
         "courseId": "C5",
         "lessons": [],
-        "instructorId": "Eng. Karim"
+        "instructorId": "U2"
     },
     {
         "description": "Intro to Python.",
@@ -60,15 +60,15 @@
         "title": "Python Programming",
         "courseId": "C6",
         "lessons": [],
-        "instructorId": "Dr. Youssef"
+        "instructorId": "U2"
     },
     {
         "description": "Basics of algorithms.",
-        "students": [],
+        "students": ["U25"],
         "title": "Algorithms Intro",
         "courseId": "C7",
         "lessons": [],
-        "instructorId": "Prof. Hany"
+        "instructorId": "U8"
     },
     {
         "description": "Computer networks basics.",
@@ -76,77 +76,30 @@
         "title": "Networks 1",
         "courseId": "C8",
         "lessons": [],
-        "instructorId": "Dr. Salma"
+        "instructorId": "U4"
     },
     {
         "description": "Learn OS concepts.",
-        "students": [],
+        "students": ["U25"],
         "title": "Operating Systems",
         "courseId": "C9",
         "lessons": [],
-        "instructorId": "Dr. Farouk"
+        "instructorId": "U2"
     },
     {
         "description": "Build simple apps.",
-        "students": [],
+        "students": ["U25"],
         "title": "Mobile App Dev",
         "courseId": "C10",
         "lessons": [],
-        "instructorId": "Eng. Mariam"
+        "instructorId": "U2"
     },
     {
         "description": "Description 11",
-        "students": [],
+        "students": ["U25"],
         "title": "Course 11",
         "courseId": "C11",
         "lessons": [],
-        "instructorId": "I1"
-    },
-    {
-        "description": "Description 11",
-        "students": [],
-        "title": "Course 11",
-        "courseId": "C12",
-        "instructorId": "I1",
-        "lessons": []
-    },
-    {
-        "description": "Description 11",
-        "students": [],
-        "title": "Course 11",
-        "courseId": "C13",
-        "instructorId": "I1",
-        "lessons": []
-    },
-    {
-        "description": "Learn Java.",
-        "students": [],
-        "title": "Java Basics",
-        "courseId": "C1",
-        "lessons": [
-            {
-                "optionalResources": [],
-                "lessonId": "L1",
-                "title": "Lesson 1",
-                "courseId": "C11",
-                "content": "Content 1"
-            },
-            {
-                "optionalResources": [],
-                "lessonId": "L2",
-                "title": "Lesson 2",
-                "courseId": "C11",
-                "content": "Content 2"
-            }
-        ],
-        "instructorId": "Dr. Ahmed"
-    },
-    {
-        "description": "Description 11",
-        "students": [],
-        "title": "Course 11",
-        "courseId": "C15",
-        "instructorId": "I1",
-        "lessons": []
+        "instructorId": "U2"
     }
 ]

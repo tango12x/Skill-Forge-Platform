@@ -1,6 +1,7 @@
-
 package backend.ProgramFunctions.CourseManagement;
+
 import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
+import backend.ProgramFunctions.StudentManagement.Student;
 
 import java.util.ArrayList;
 
@@ -81,5 +82,20 @@ public class Course {
                 lessons.set(i, newLesson);
                 return;}}}
 
+    //return if student is enrolled in the course or not
+    public boolean isStudentEnrolled(String studentId){
+        for (String id : students) {
+            if (id.equals(studentId)) {
+                return true;}
+            }
+            return false;
+    }
+
+    //adding students to course
+    public void addStudent(String studentId){
+        if (studentId == null || studentId.trim().isEmpty()) return;
+        if (isStudentEnrolled(studentId)) {return;}
+        students.add(studentId);
+    }
 
 }

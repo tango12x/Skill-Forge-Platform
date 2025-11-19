@@ -1,8 +1,10 @@
 package frontend;
 
 import backend.SecurityAndValidation.*;
-import backend.SecurityAndValidation.Validator;
 import backend.ProgramFunctions.UserAccountManagement.*;
+
+import javax.swing.JFrame;
+
 import backend.JsonDatabaseManager.*;
 
 /**
@@ -147,9 +149,11 @@ public class Login extends javax.swing.JFrame {
 
         if (found.getRole().equals("student")) {
             System.out.println("Student logged in");
-            // StudentDashboard frame = new StudentDashboard();
-            // frame.setVisible(true);
-            // frame.setLocationRelativeTo(null);
+            //!NTST
+            StudentDashboard frame = new StudentDashboard(found.getUserId(), found.getUsername());
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.dispose();
         } else {
             System.out.println("Instructor logged in");

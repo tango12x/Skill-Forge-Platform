@@ -47,7 +47,7 @@ public class Student extends User {
         progress.add(new ArrayList<>());}
 
     // FIND THE COURSE INDEX IN ENROLLED COURSE USING COURSE ID
-    private int findCourseIndex(String courseId) {
+    public int findCourseIndex(String courseId) {
         for (int i = 0; i < enrolledCourses.size(); i++) {
             if (enrolledCourses.get(i).equals(courseId)) {
                 return i;}}
@@ -64,10 +64,13 @@ public class Student extends User {
         if (!completedLessons.contains(lessonId)) {
             completedLessons.add(lessonId);}}
 
-
-
-
-    
-
+    //return if student is enrolled in the course or not
+    public boolean isEnrolled(String courseId){
+        for (String id : enrolledCourses) {
+            if (id.equals(courseId)) {
+                return true;}
+            }
+            return false;
+    }
 
 }

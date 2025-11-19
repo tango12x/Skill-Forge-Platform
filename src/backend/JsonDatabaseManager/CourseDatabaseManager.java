@@ -126,7 +126,7 @@ public class CourseDatabaseManager {
                     : LessonToJSON(updatedCourse.getLessons()));
             obj.put("students", updatedCourse.getStudents() == null ? new ArrayList<String>()
                     : JsonDatabaseManager.toJSONArray(updatedCourse.getStudents()));
-            this.courses.put(obj);
+            //this.courses.put(obj);
         } catch (Exception e) {
             e.printStackTrace();
         }

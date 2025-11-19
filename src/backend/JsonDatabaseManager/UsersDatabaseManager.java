@@ -51,7 +51,7 @@ public class UsersDatabaseManager {
         for (int i = 0; i < this.users.length(); i++) {
             JSONObject obj = this.users.getJSONObject(i);
             if (obj.getString("userId").equals(userId)) {
-                System.out.println("Found user at index: " + i);
+                // System.out.println("Found user at index: " + i);
                 return i; // Return the index if found
             }
         }
@@ -146,7 +146,7 @@ public class UsersDatabaseManager {
                  new ArrayList<String>() : JsonDatabaseManager.toJSONArray(((Instructor) updatedUser).getCreatedCourses()));
             }
 
-            this.users.put(obj);
+            //this.users.put(obj);
         } catch (Exception e) {
             e.printStackTrace();
         }
