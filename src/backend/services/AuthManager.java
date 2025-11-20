@@ -2,12 +2,9 @@ package backend.services;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import backend.databaseManager.*;
 import backend.models.*;
 import backend.models.parents.User;
+import backend.databaseManager.*;
 import backend.util.*;
 
 public class AuthManager {
@@ -28,42 +25,38 @@ public class AuthManager {
             return null;
 
         // 2. Load users
-        JSONArray users = db.getAllUsers();
+        ArrayList<User> users = db.getAllUsers();
 
         // 3. Hash password
         String hashed = PasswordHasher.hashPassword(password);
 
         // 4. Compare
-        for (int i = 0; i < users.length(); i++) {
-            JSONObject u = users.getJSONObject(i);
-            if (u.getString("email").equalsIgnoreCase(email) && u.getString("passwordHash").equals(hashed)) 
+        for (int i = 0; i < users.size(); i++) {
+            User u = users.get(i);
+            if (u.getEmail().equalsIgnoreCase(email) && u.getPasswordHash().equals(hashed)) 
             {
-                return db.getUser(u.getString("userId"));
+                return db.getUser(u.getUserId());
             }
         }
-
         return null; // not found
     }
 
 
     // REGISTER METHOD TO CREATE A NEW USER
     public User register(String username, String email, String password, String role) {
-
         // Load users
-        JSONArray users = db.getAllUsers();
-
+        ArrayList<User> users = db.getAllUsers();
 
         // Check existing email
-        for (int i = 0; i < users.length(); i++) {
-            JSONObject u = users.getJSONObject(i);
-            if (u.getString("email").equalsIgnoreCase(email)) {
+        for (int i = 0; i < users.size(); i++) {
+            User u = users.get(i);
+            if (u.getEmail().equalsIgnoreCase(email)) {
                 return null;
             }
         }
 
         // Hash password
         String hashed = PasswordHasher.hashPassword(password);
-
 
         User newUser;
         // create correct role
@@ -74,11 +67,7 @@ public class AuthManager {
         }
         String id = db.addUser(newUser);
         db.SaveUsersToFile();
-
-
         return db.getUser(id);
     }
-
-
 
 }
