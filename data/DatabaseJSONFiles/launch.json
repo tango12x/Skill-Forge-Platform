@@ -6,7 +6,11 @@
             "name": "login",
             "request": "launch",
             "mainClass": "login",
-            "projectName": "OOP-Lab-7_434d5622"
+            "projectName": "OOP-Lab-7_434d5622",
+            "classPaths": [
+                "${workspaceFolder}/out",
+                "${workspaceFolder}/lib/org.json-1.6-20240205.jar"
+            ]
         },
         {
             "type": "java",

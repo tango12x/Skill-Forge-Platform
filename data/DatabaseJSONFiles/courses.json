@@ -104,5 +104,13 @@
         "courseId": "C11",
         "lessons": [],
         "instructorId": "U2"
+    },
+    {
+        "description": "Description 11",
+        "students": [],
+        "title": "Course 11",
+        "courseId": "C12",
+        "instructorId": "I1",
+        "lessons": []
     }
 ]
