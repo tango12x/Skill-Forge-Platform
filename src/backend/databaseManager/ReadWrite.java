@@ -23,7 +23,7 @@ public class ReadWrite {
      * Private constructor for Singleton pattern
      * Initializes GSON and ensures data directory exists
      */
-    private ReadWrite() {
+    public ReadWrite() {
         this.gson = new GsonBuilder()
                 .setPrettyPrinting() // Format JSON with indentation
                 .serializeNulls() // Include null values in JSON
@@ -34,7 +34,7 @@ public class ReadWrite {
 
 
     // READ ANY TYPE OF LIST FROM JSON , TAKES FILENAME AND TYPE (e.g., User.class),returns list
-    public synchronized <T> List<T> readFromFile(String filename, Class<T> type) {
+    public synchronized <T> ArrayList<T> readFromFile(String filename, Class<T> type) {
         File file = new File(filename);
 
         // If file doesn't exist, return empty list instead of throwing error
@@ -49,9 +49,9 @@ public class ReadWrite {
              * so we use TypeToken to preserve them This allows GSON to properly deserialize
              * List<User>, List<Course>, etc.
              */
+            // Type listType = TypeToken.getParameterized(List.class, User.class).getType();
             Type listType = TypeToken.getParameterized(List.class, type).getType();
             ArrayList<T> items = (ArrayList<T>) gson.fromJson(reader, listType);
-
             // Handle case where file is empty or contains null
             return items != null ? items : new ArrayList<>();
 

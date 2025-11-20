@@ -7,7 +7,7 @@ import backend.models.Course;
 import backend.models.Instructor;
 import backend.models.Lesson;
 import backend.models.Student;
-import backend.models.abstracts.User;
+import backend.models.parents.User;
 
 import java.io.*;
 import java.lang.reflect.Array;

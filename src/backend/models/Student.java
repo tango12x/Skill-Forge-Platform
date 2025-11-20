@@ -2,7 +2,7 @@ package backend.models;
 
 import java.util.ArrayList;
 
-import backend.models.abstracts.User;
+import backend.models.parents.User;
 
 
 public class Student extends User {

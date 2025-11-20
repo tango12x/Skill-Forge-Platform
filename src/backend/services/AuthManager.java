@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import backend.databaseManager.*;
 import backend.models.*;
-import backend.models.abstracts.User;
+import backend.models.parents.User;
 import backend.util.*;
 
 public class AuthManager {

@@ -1,7 +1,7 @@
 package frontend;
 
 import backend.databaseManager.*;
-import backend.models.abstracts.User;
+import backend.models.parents.User;
 import backend.services.AuthManager;
 
 

@@ -1,6 +1,6 @@
-package backend.models.abstracts;
+package backend.models.parents;
 
-public abstract class User {
+public class User {
     private String userId;
     private String role;
     private String username;
