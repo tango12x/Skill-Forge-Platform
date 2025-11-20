@@ -1,13 +1,13 @@
-package backend.JsonDatabaseManager;
+package backend.databaseManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import backend.ProgramFunctions.UserAccountManagement.User;
-import backend.ProgramFunctions.CourseManagement.Course;
-import backend.ProgramFunctions.InstructorManagement.Instructor;
-import backend.ProgramFunctions.StudentManagement.Student;
-import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
+import backend.models.Course;
+import backend.models.Instructor;
+import backend.models.Lesson;
+import backend.models.Student;
+import backend.models.abstracts.User;
 
 import java.io.*;
 import java.lang.reflect.Array;

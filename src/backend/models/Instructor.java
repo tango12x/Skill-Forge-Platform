@@ -1,6 +1,7 @@
-package backend.ProgramFunctions.InstructorManagement;
-import backend.ProgramFunctions.UserAccountManagement.User;
+package backend.models;
 import java.util.ArrayList;
+
+import backend.models.abstracts.User;
 
 
 public class Instructor extends User {

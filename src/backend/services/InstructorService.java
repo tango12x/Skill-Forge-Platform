@@ -1,12 +1,10 @@
-package backend.ProgramFunctions.InstructorManagement;
+package backend.services;
 
 import org.json.JSONArray;
 import java.util.ArrayList;
-import backend.ProgramFunctions.CourseManagement.*;
-import backend.ProgramFunctions.InstructorManagement.*;
-import backend.ProgramFunctions.LessonAndLearningFeatures.*;
-import backend.ProgramFunctions.StudentManagement.Student;
-import backend.JsonDatabaseManager.*;
+import backend.databaseManager.*;
+import backend.models.*;
+import backend.util.*;
 
 public class InstructorService {
     private Instructor instructor;

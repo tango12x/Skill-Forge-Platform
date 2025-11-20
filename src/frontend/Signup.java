@@ -1,9 +1,9 @@
 package frontend;
 
-import backend.SecurityAndValidation.*;
-import backend.SecurityAndValidation.Validator;
-import backend.ProgramFunctions.UserAccountManagement.*;
-import backend.JsonDatabaseManager.*;
+import backend.databaseManager.*;
+import backend.models.abstracts.User;
+import backend.services.AuthManager;
+import backend.util.Validator;
 
 
 

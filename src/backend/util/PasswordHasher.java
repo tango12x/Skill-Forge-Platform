@@ -1,4 +1,4 @@
-package backend.SecurityAndValidation;
+package backend.util;
 
 import java.security.MessageDigest;
 

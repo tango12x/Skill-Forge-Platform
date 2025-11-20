@@ -1,11 +1,11 @@
 package frontend;
 
-import backend.SecurityAndValidation.*;
-import backend.ProgramFunctions.UserAccountManagement.*;
+import backend.databaseManager.*;
+import backend.models.abstracts.User;
+import backend.services.AuthManager;
+
 
 import javax.swing.JFrame;
-
-import backend.JsonDatabaseManager.*;
 
 /**
  *

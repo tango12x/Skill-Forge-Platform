@@ -2,10 +2,11 @@ package frontend;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import backend.ProgramFunctions.CourseManagement.Course;
-import backend.ProgramFunctions.InstructorManagement.Instructor;
-import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
-import backend.ProgramFunctions.StudentManagement.StudentService;
+
+import backend.models.Course;
+import backend.models.Instructor;
+import backend.models.Lesson;
+import backend.services.StudentService;
 
 //! possible error sources are labelled (PES) for easy search
 //!for need testing NTST

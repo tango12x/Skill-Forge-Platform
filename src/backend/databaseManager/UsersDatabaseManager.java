@@ -1,11 +1,11 @@
-package backend.JsonDatabaseManager;
+package backend.databaseManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import backend.ProgramFunctions.UserAccountManagement.User;
-import backend.ProgramFunctions.InstructorManagement.Instructor;
-import backend.ProgramFunctions.StudentManagement.Student;
+import backend.models.Instructor;
+import backend.models.Student;
+import backend.models.abstracts.User;
 
 import java.io.*;
 import java.nio.file.Files;

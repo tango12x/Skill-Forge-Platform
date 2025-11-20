@@ -1,4 +1,4 @@
-package backend.ProgramFunctions.UserAccountManagement;
+package backend.models.abstracts;
 
 public abstract class User {
     private String userId;

@@ -1,7 +1,8 @@
-package backend.ProgramFunctions.StudentManagement;
+package backend.models;
 
-import backend.ProgramFunctions.UserAccountManagement.User;
 import java.util.ArrayList;
+
+import backend.models.abstracts.User;
 
 
 public class Student extends User {

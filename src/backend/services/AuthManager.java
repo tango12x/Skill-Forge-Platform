@@ -1,15 +1,14 @@
-package backend.SecurityAndValidation;
+package backend.services;
 
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import backend.JsonDatabaseManager.UsersDatabaseManager;
-import backend.ProgramFunctions.InstructorManagement.*;
-import backend.ProgramFunctions.StudentManagement.*;
-import backend.ProgramFunctions.UserAccountManagement.*;
-import backend.SecurityAndValidation.*;
+import backend.databaseManager.*;
+import backend.models.*;
+import backend.models.abstracts.User;
+import backend.util.*;
 
 public class AuthManager {
 

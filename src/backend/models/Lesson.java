@@ -1,8 +1,7 @@
-package backend.ProgramFunctions.LessonAndLearningFeatures;
-
-import backend.SecurityAndValidation.Validator;
+package backend.models;
 
 import java.util.ArrayList;
+
 
 public class Lesson {
     private String lessonId;
@@ -72,4 +71,5 @@ public class Lesson {
 
 
 }
+
 

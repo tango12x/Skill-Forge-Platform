@@ -1,5 +1,5 @@
 
-package backend.JsonDatabaseManager;
+package backend.databaseManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

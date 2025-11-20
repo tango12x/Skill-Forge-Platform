@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import backend.ProgramFunctions.CourseManagement.Course;
-import backend.ProgramFunctions.InstructorManagement.*;
-import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
-import backend.ProgramFunctions.StudentManagement.*;
+
+import backend.models.Course;
+import backend.models.Lesson;
+import backend.services.InstructorService;
 
 
 /**

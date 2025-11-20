@@ -1,7 +1,4 @@
-package backend.ProgramFunctions.CourseManagement;
-
-import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
-import backend.ProgramFunctions.StudentManagement.Student;
+package backend.models;
 
 import java.util.ArrayList;
 
