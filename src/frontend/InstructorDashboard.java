@@ -950,7 +950,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 // Use parameterized constructor with instructor data
-                new InstructorDashboard("U8", "bebe").setVisible(true);
+                new InstructorDashboard("U3", "gelo").setVisible(true);
             }
         });
     }

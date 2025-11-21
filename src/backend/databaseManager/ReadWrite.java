@@ -37,6 +37,7 @@ public class ReadWrite {
      * - Handles dates consistently
      */
     public ReadWrite() {
+        //! VERY ERROR PRONE!!!!!!!!!!!!!!!!!!!!!!
         // Custom type adapter for collections that returns empty lists instead of null
         TypeAdapter<Collection> collectionAdapter = new TypeAdapter<Collection>() {
             @Override
@@ -130,23 +131,6 @@ public class ReadWrite {
             }
         };
 
-        // Custom deserializer for Course to ensure non-null collections
-        JsonDeserializer<Course> courseDeserializer = new JsonDeserializer<Course>() {
-            @Override
-            public Course deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)throws JsonParseException {
-                //!NTST
-                Course course = context.deserialize(json, Course.class);
-                // Ensure collections are never null
-                if (course.getLessons() == null) {
-                    course.setLessons(new ArrayList<Lesson>());
-                }
-                if (course.getStudents() == null) {
-                    course.setStudents(new ArrayList<String>());
-                }
-                return course;
-            }
-        };
-
         // Initialize GSON with all custom configurations
         this.gson = new GsonBuilder()
                 .setPrettyPrinting() // Format JSON for readability
@@ -154,7 +138,6 @@ public class ReadWrite {
                 .disableHtmlEscaping() // Preserve HTML in content
                 .setDateFormat("yyyy-MM-dd HH:mm:ss") // Consistent date format
                 .registerTypeAdapter(User.class, userDeserializer) // Handle User polymorphism
-                // .registerTypeAdapter(Course.class, courseDeserializer) // Ensure non-null collections in Course
                 .registerTypeAdapter(Collection.class, collectionAdapter)
                 .registerTypeAdapter(List.class, collectionAdapter)
                 .registerTypeAdapter(ArrayList.class, collectionAdapter)

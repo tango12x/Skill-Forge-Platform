@@ -1,4 +1,5 @@
 package frontend;
+
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -7,6 +8,7 @@ import backend.models.Course;
 import backend.models.Instructor;
 import backend.models.Lesson;
 import backend.services.StudentService;
+import frontend.util.*;
 
 //! possible error sources are labelled (PES) for easy search
 //!for need testing NTST
@@ -97,7 +99,7 @@ public class StudentDashboard extends javax.swing.JFrame {
             }
         };
         tblMyCourses.setModel(enrolledCoursesModel);
-
+        tblMyCourses.getColumnModel().getColumn(2).setCellRenderer(new ProgressBarRenderer());
         // Lessons table model with status indicator
         lessonsModel = new javax.swing.table.DefaultTableModel(
                 new Object[][] {},
@@ -557,12 +559,13 @@ public class StudentDashboard extends javax.swing.JFrame {
             //for progress
             int numLessons = enCrs.getLessons().size();
             int numCompleted = progress.get(i).size();
-            String shown_progress  = Integer.toString(numCompleted) + 
-                                    " completed out of " + 
-                                    Integer.toString(numLessons);
+            int percentage = numLessons == 0 ? 0 : (numCompleted * 100) / numLessons;
+        //     String shown_progress  = Integer.toString(numCompleted) + 
+                                //     " completed out of " + 
+                                //     Integer.toString(numLessons);
             enrolledCoursesModel.addRow(new Object[] {
                 enCrs.getCourseId(), enCrs.getTitle(),
-                shown_progress, enrolledInstructors.get(i).getUsername()
+                percentage, enrolledInstructors.get(i).getUsername()
             });
         }
     }
