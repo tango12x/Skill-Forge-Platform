@@ -13,7 +13,6 @@ import backend.databaseManager.*;
  * @author pc
  */
 
-//! solve thread problem between view lessons and lesson editor
 public class ViewLessons extends javax.swing.JFrame {
     String courseId;
     String Title;
@@ -35,7 +34,7 @@ public class ViewLessons extends javax.swing.JFrame {
         initializeTableAndLoadData();
     }
 
-    private void initializeTableAndLoadData() {
+    public void initializeTableAndLoadData() {
         this.lessons = Cdb.getCourse(courseId).getLessons();
         if (this.lessons == null) {
             this.lessons = new ArrayList<Lesson>();

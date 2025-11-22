@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import backend.databaseManager.CourseDatabaseManager;
 import backend.models.*;
 
-//! compelete it
 /**
  *
  * @author pc
@@ -18,13 +17,15 @@ public class LessonEditor extends javax.swing.JDialog {
     Lesson lesson;
     Course course;
     CourseDatabaseManager Cdb;
+    private ViewLessons parentView;
 
     /**
      * Creates new form LessonEditor
      */
-    public LessonEditor(String courseId, JFrame parent) {
+    public LessonEditor(String courseId, ViewLessons parent) {
         // !NTST
         super(parent, "Dialog", true);
+        this.parentView = parent; // Store reference to parent
         this.mode = "create";
         this.courseId = courseId;
         Cdb = new CourseDatabaseManager();
@@ -35,9 +36,10 @@ public class LessonEditor extends javax.swing.JDialog {
         lesson = new Lesson(course.generateLessonId(), "", courseId, "");
     }
 
-    public LessonEditor(String courseId, String lessonId, JFrame parent) {
+    public LessonEditor(String courseId, String lessonId, ViewLessons parent) {
         // !NTST
         super(parent, "Dialog", true);
+        this.parentView = parent; // Store reference to parent
         this.mode = "edit";
         this.courseId = courseId;
         this.lessonId = lessonId;
@@ -52,7 +54,6 @@ public class LessonEditor extends javax.swing.JDialog {
         initComponents();
         advancedIntialize();
     }
-
 
     private void advancedIntialize() {
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -298,20 +299,26 @@ public class LessonEditor extends javax.swing.JDialog {
                 return;
             }
             if (mode.equalsIgnoreCase("create")) {
-                // !NTST
                 lesson.setTitle(titlefield.getText());
                 lesson.setContent(contentField.getText());
                 course.addLesson(lesson);
                 Cdb.update(course);
                 Cdb.SaveCoursesToFile();
+                // Refresh parent table
+                if (parentView != null) {
+                    parentView.initializeTableAndLoadData();
+                }
                 this.dispose();
             } else {
-                // !NTST
                 lesson.setTitle(titlefield.getText());
                 lesson.setContent(contentField.getText());
                 course.editLesson(lessonId, lesson);
                 Cdb.update(course);
                 Cdb.SaveCoursesToFile();
+                // Refresh parent table
+                if (parentView != null) {
+                    parentView.initializeTableAndLoadData();
+                }
                 this.dispose();
             }
         }
