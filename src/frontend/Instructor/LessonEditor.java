@@ -1,14 +1,11 @@
 package frontend.Instructor;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
 import javax.swing.JFrame;
 
 import backend.databaseManager.CourseDatabaseManager;
 import backend.models.*;
 
+//! compelete it
 /**
  *
  * @author pc
@@ -27,12 +24,14 @@ public class LessonEditor extends javax.swing.JFrame {
     public LessonEditor(String courseId) {
         this.mode = "create";
         this.courseId = courseId;
-        this.lessonId = "";
         Cdb = new CourseDatabaseManager();
         course = Cdb.getCourse(courseId);
         initComponents();
         advancedIntialize();
+        this.lessonId = "";
+        lesson = new Lesson(course.generateLessonId(),"", courseId,"");
     }
+
     public LessonEditor(String courseId, String lessonId) {
         this.mode = "edit";
         this.courseId = courseId;
@@ -40,7 +39,7 @@ public class LessonEditor extends javax.swing.JFrame {
         Cdb = new CourseDatabaseManager();
         course = Cdb.getCourse(courseId);
         for (int i = 0; i < course.getLessons().size(); i++) {
-            if(lessonId.equals(course.getLessons().get(i).getLessonId())){
+            if (lessonId.equals(course.getLessons().get(i).getLessonId())) {
                 lesson = course.getLessons().get(i);
                 break;
             }
@@ -49,22 +48,27 @@ public class LessonEditor extends javax.swing.JFrame {
         advancedIntialize();
     }
 
-
     private void advancedIntialize() {
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         String title;
         String content;
-        if(mode.equalsIgnoreCase("create")){
+        if (mode.equalsIgnoreCase("create")) {
             title = "";
             content = "";
-        }
-        else {
+            LblInstructorInfo.setText("");
+        } else {
             title = lesson.getTitle();
             content = lesson.getContent();
+            LblInstructorInfo.setText("Lesson: "+ title+" (ID: " +lessonId+")");
         }
         titlefield.setText(title);
         contentField.setText(content);
         resourceField.setText("");
+        //Name of label is not meaningful , but irrelevant here
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -277,11 +281,55 @@ public class LessonEditor extends javax.swing.JFrame {
     }// GEN-LAST:event_btnReturnActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+                "save changes?",
+                "Confirm save", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            if (titlefield.getText().isEmpty() || contentField.getText().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "cannot save empty lesson.",
+                        "No data", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (mode.equalsIgnoreCase("create")) {
+                // !NTST
+                lesson.setTitle(titlefield.getText());
+                lesson.setContent(contentField.getText());
+                course.addLesson(lesson);
+                Cdb.update(course);
+                Cdb.SaveCoursesToFile();
+                this.dispose();
+            } else {
+                // !NTST
+                lesson.setTitle(titlefield.getText());
+                lesson.setContent(contentField.getText());
+                course.editLesson(lessonId, lesson);
+                Cdb.update(course);
+                Cdb.SaveCoursesToFile();
+                this.dispose();
+            }
+        }
     }// GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAddResourceActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddResourceActionPerformed
-        // TODO add your handling code here:
+        String resource = resourceField.getText();
+        // input is present
+        if (resource.length() > 0 && titlefield.getText().length() > 0
+                && contentField.getText().length() > 0) {
+            lesson.addResource(resource);
+            resourceField.setText("");
+        } else if (resource.length() <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "cannot empty resources to lesson.",
+                    "No data", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "cannot add resources to empty lesson.",
+                    "No data", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
     }// GEN-LAST:event_btnAddResourceActionPerformed
 
     /**
@@ -322,7 +370,7 @@ public class LessonEditor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LessonEditor().setVisible(true);
+                // new LessonEditor().setVisible(true);
             }
         });
     }

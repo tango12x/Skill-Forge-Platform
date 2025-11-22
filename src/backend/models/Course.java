@@ -93,6 +93,10 @@ public class Course {
             return false;
     }
 
+    public String generateLessonId(){
+        return "L" + String.format("%d", this.lessons.size() + 1);
+    }
+
     //adding students to course
     public void addStudent(String studentId){
         if (studentId == null || studentId.trim().isEmpty()) return;

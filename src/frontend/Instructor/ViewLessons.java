@@ -2,6 +2,7 @@ package frontend.Instructor;
 
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import backend.models.*;
@@ -11,6 +12,8 @@ import backend.databaseManager.*;
  *
  * @author pc
  */
+
+//! solve thread problem between view lessons and lesson editor
 public class ViewLessons extends javax.swing.JFrame {
     String courseId;
     String Title;
@@ -22,13 +25,13 @@ public class ViewLessons extends javax.swing.JFrame {
      * Creates new form ViewLessons
      */
     public ViewLessons(String courseId, String Title) {
-        
+
         this.courseId = courseId;
         this.Title = Title;
         //name of label is not right 
         Cdb = new CourseDatabaseManager();
         initComponents();
-        LblInstructorInfo.setText("Lesson of Course: " + Title + " (ID: " + courseId + ")");
+        LblInstructorInfo.setText("Lessons of Course: " + Title + " (ID: " + courseId + ")");
         initializeTableAndLoadData();
     }
 
@@ -55,6 +58,7 @@ public class ViewLessons extends javax.swing.JFrame {
                     l.getContent()
             });
         }
+        System.out.println("lesson table loaded , size: " + lessons.size());
     }
 
     /**
@@ -250,9 +254,10 @@ public class ViewLessons extends javax.swing.JFrame {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             JFrame frame = new LessonEditor(courseId);
             frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
         }
+        //wait for child to finish
         try {
             initializeTableAndLoadData();
         } catch (Exception e) {
@@ -277,7 +282,7 @@ public class ViewLessons extends javax.swing.JFrame {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             JFrame frame = new LessonEditor(courseId,id);
             frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
         }
         try {
@@ -287,7 +292,6 @@ public class ViewLessons extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_btnEditLessonActionPerformed
 
-    // !NTST
     private void btnDeleteLessonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDeleteLessonActionPerformed
         int selectedRow = lessonsTable.getSelectedRow();
         if (selectedRow == -1) {

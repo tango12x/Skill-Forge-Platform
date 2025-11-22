@@ -72,31 +72,6 @@
     "students": []
   },
   {
-    "courseId": "C1",
-    "title": "Java Basics",
-    "instructorId": "U7",
-    "description": "Learn Java.",
-    "lessons": [
-      {
-        "lessonId": "L1",
-        "title": "Lesson 1",
-        "content": "Content 1",
-        "courseId": "C1",
-        "optionalResources": []
-      },
-      {
-        "lessonId": "L2",
-        "title": "Lesson 2",
-        "content": "Content 2",
-        "courseId": "C1",
-        "optionalResources": []
-      }
-    ],
-    "students": [
-      "U2"
-    ]
-  },
-  {
     "courseId": "C13",
     "title": "Course 11",
     "instructorId": "U7",
@@ -122,6 +97,73 @@
     "instructorId": "U3",
     "description": "Build simple apps.",
     "lessons": [],
+    "students": [
+      "U2"
+    ]
+  },
+  {
+    "courseId": "C1",
+    "title": "Java Basics",
+    "instructorId": "U7",
+    "description": "Learn Java.",
+    "lessons": [
+      {
+        "lessonId": "L1",
+        "title": "Lesson 1",
+        "content": "Content 1",
+        "courseId": "C1",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "L2",
+        "title": "Lesson 2",
+        "content": "Content 3",
+        "courseId": "C1",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "L3",
+        "title": "haha",
+        "content": "haha ya ",
+        "courseId": "C1",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "L4",
+        "title": "keke",
+        "content": "elel",
+        "courseId": "C1",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "L5",
+        "title": "d;dd;",
+        "content": "d,ld",
+        "courseId": "C1",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "L6",
+        "title": "llsdss",
+        "content": "ksksk",
+        "courseId": "C1",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "L7",
+        "title": "jfjjfj",
+        "content": "kffkf",
+        "courseId": "C1",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "L8",
+        "title": "ddlldl",
+        "content": "dldll",
+        "courseId": "C1",
+        "optionalResources": []
+      }
+    ],
     "students": [
       "U2"
     ]
