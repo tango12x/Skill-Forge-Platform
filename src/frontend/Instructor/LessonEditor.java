@@ -1,7 +1,6 @@
 package frontend.Instructor;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 
 import backend.databaseManager.CourseDatabaseManager;
 import backend.models.*;

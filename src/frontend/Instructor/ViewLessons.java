@@ -13,7 +13,7 @@ import backend.databaseManager.*;
  * @author pc
  */
 
-public class ViewLessons extends javax.swing.JFrame {
+public class ViewLessons extends JFrame {
     String courseId;
     String Title;
     CourseDatabaseManager Cdb;
@@ -23,18 +23,19 @@ public class ViewLessons extends javax.swing.JFrame {
     /**
      * Creates new form ViewLessons
      */
-    public ViewLessons(String courseId, String Title) {
+    public ViewLessons(String courseId) {
 
         this.courseId = courseId;
-        this.Title = Title;
+        this.Title = "";
         //name of label is not right 
         Cdb = new CourseDatabaseManager();
         initComponents();
-        LblInstructorInfo.setText("Lessons of Course: " + Title + " (ID: " + courseId + ")");
         initializeTableAndLoadData();
+        LblInstructorInfo.setText("Lessons of Course: " + Title + " (ID: " + courseId + ")");
     }
 
     public void initializeTableAndLoadData() {
+        Title = Cdb.getCourse(courseId).getTitle();
         this.lessons = Cdb.getCourse(courseId).getLessons();
         if (this.lessons == null) {
             this.lessons = new ArrayList<Lesson>();
@@ -355,7 +356,7 @@ public class ViewLessons extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewLessons("C1", "Java Basics").setVisible(true);
+                new ViewLessons("C1").setVisible(true);
             }
         });
     }
