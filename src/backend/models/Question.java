@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -5,7 +7,7 @@ public class Question {
     //CLASS ATTRIBUTES
     private String questionId;
     private String questionText;
-    private List<String> options;          
+    private ArrayList<String> options;          
     private int correctOptionIndex;        
     private String explanation;            
     private int points;               
