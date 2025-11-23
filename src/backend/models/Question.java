@@ -27,39 +27,35 @@ public class Question {
                    int correctOptionIndex) {
         this(questionId, questionText, options, correctOptionIndex, "", 1);}
 
-    // Getters and Setters
-    public String getQuestionId() { return questionId; }
-    public void setQuestionId(String questionId) { this.questionId = questionId; }
+    // GETTERS AND SETTERS
+    public String getQuestionId() {
+        return questionId;}
+    public void setQuestionId(String questionId) {
+        this.questionId = questionId;}
+    public String getQuestionText() {
+        return questionText;}
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;}
+    public ArrayList<String> getOptions() {
+        return options;}
+    public void setOptions(ArrayList<String> options) {
+        this.options = (options != null) ? options : new ArrayList<>();}
+    public int getCorrectOptionIndex() {
+        return correctOptionIndex;}
+    public void setCorrectOptionIndex(int correctOptionIndex) {
+        this.correctOptionIndex = correctOptionIndex;}
+    public String getExplanation() {
+        return explanation;}
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;}
+    public int getPoints() {
+        return points;}
+    public void setPoints(int points) {
+        this.points = points > 0 ? points : 1;}
 
-    public String getQuestionText() { return questionText; }
-    public void setQuestionText(String questionText) { this.questionText = questionText; }
-
-    public ArrayList<String> getOptions() { return options; }
-    public void setOptions(ArrayList<String> options) { 
-        this.options = options != null ? options : new ArrayList<>(); 
-    }
-
-    public int getCorrectOptionIndex() { return correctOptionIndex; }
-    public void setCorrectOptionIndex(int correctOptionIndex) { 
-        if (correctOptionIndex >= 0 && correctOptionIndex < options.size()) {
-            this.correctOptionIndex = correctOptionIndex;
-        }
-    }
-
-    public String getExplanation() { return explanation; }
-    public void setExplanation(String explanation) { 
-        this.explanation = explanation != null ? explanation : ""; 
-    }
-
-    public int getPoints() { return points; }
-    public void setPoints(int points) { 
-        this.points = points > 0 ? points : 1; 
-    }
-
-    // Utility methods
+    
     public boolean isCorrectAnswer(int selectedIndex) {
-        return selectedIndex == correctOptionIndex;
-    }
+        return selectedIndex == correctOptionIndex;}
 
     public boolean isCorrectAnswer(String selectedOption) {
         return selectedOption != null && 
