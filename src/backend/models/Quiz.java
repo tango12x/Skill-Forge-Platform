@@ -117,6 +117,17 @@ public class Quiz {
                title != null && !title.trim().isEmpty() &&
                questions != null && !questions.isEmpty();}
 
+    // TO STRING
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "quizId='" + quizId + '\'' +
+                ", title='" + title + '\'' +
+                ", questions=" + questions.size() +
+                ", totalPoints=" + getTotalPoints() +
+                ", passingScore=" + passingScore + "%" +
+                ", maxAttempts=" + (maxAttempts == 0 ? "Unlimited" : maxAttempts) +
+                '}';}
     
 
     
