@@ -16,12 +16,12 @@ public class LessonEditor extends javax.swing.JDialog {
     Lesson lesson;
     Course course;
     CourseDatabaseManager Cdb;
-    private ViewLessons parentView;
+    private JDialog parentView;
 
     /**
      * Creates new form LessonEditor
      */
-    public LessonEditor(String courseId, ViewLessons parent) {
+    public LessonEditor(String courseId, JDialog parent) {
         // !NTST
         super(parent, "Dialog", true);
         this.parentView = parent; // Store reference to parent
@@ -35,7 +35,7 @@ public class LessonEditor extends javax.swing.JDialog {
         lesson = new Lesson(course.generateLessonId(), "", courseId, "");
     }
 
-    public LessonEditor(String courseId, String lessonId, ViewLessons parent) {
+    public LessonEditor(String courseId, String lessonId, JDialog parent) {
         // !NTST
         super(parent, "Dialog", true);
         this.parentView = parent; // Store reference to parent
@@ -63,6 +63,7 @@ public class LessonEditor extends javax.swing.JDialog {
             title = "";
             content = "";
             LblInstructorInfo.setText("");
+            jLabel1.setText("Create Lesson");
         } else {
             title = lesson.getTitle();
             content = lesson.getContent();
@@ -304,8 +305,10 @@ public class LessonEditor extends javax.swing.JDialog {
                 Cdb.update(course);
                 Cdb.SaveCoursesToFile();
                 // Refresh parent table
-                if (parentView != null) {
-                    parentView.initializeTableAndLoadData();
+                // !NTST
+                if (parentView != null && parentView instanceof ViewLessons) {
+                    ViewLessons viewLessons = (ViewLessons) parentView;
+                    viewLessons.initializeTableAndLoadData();
                 }
                 this.dispose();
             } else {
@@ -315,8 +318,10 @@ public class LessonEditor extends javax.swing.JDialog {
                 Cdb.update(course);
                 Cdb.SaveCoursesToFile();
                 // Refresh parent table
-                if (parentView != null) {
-                    parentView.initializeTableAndLoadData();
+                // !NTST
+                if (parentView != null && parentView instanceof ViewLessons) {
+                    ViewLessons viewLessons = (ViewLessons) parentView;
+                    viewLessons.initializeTableAndLoadData();
                 }
                 this.dispose();
             }

@@ -55,6 +55,12 @@ public class InstructorService {
         }
     }
     
+    public void deleteCourse(String courseID) {
+        Cdb.deleteCourse(courseID);
+        Cdb.SaveCoursesToFile();
+        System.out.println("Course deleted successfully.");
+    }
+
     public void addLesson(String courseID,Lesson lesson) {
         Course course = Cdb.getCourse(courseID);
         course.addLesson(lesson);

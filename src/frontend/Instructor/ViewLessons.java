@@ -13,7 +13,7 @@ import backend.databaseManager.*;
  * @author pc
  */
 
-public class ViewLessons extends JFrame {
+public class ViewLessons extends JDialog {
     String courseId;
     String Title;
     CourseDatabaseManager Cdb;
@@ -23,8 +23,24 @@ public class ViewLessons extends JFrame {
     /**
      * Creates new form ViewLessons
      */
-    public ViewLessons(String courseId) {
+    public ViewLessons(String courseId, JFrame parent) {
+        super(parent, "Dialog", true);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.courseId = courseId;
+        this.Title = "";
+        //name of label is not right 
+        Cdb = new CourseDatabaseManager();
+        initComponents();
+        initializeTableAndLoadData();
+        LblInstructorInfo.setText("Lessons of Course: " + Title + " (ID: " + courseId + ")");
+    }
 
+    //This constructor is specific for CourseEditor usage
+    public ViewLessons(String courseId, JDialog parent) {
+        super(parent, "Dialog", true);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.courseId = courseId;
         this.Title = "";
         //name of label is not right 
@@ -92,7 +108,7 @@ public class ViewLessons extends JFrame {
                 jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 100, Short.MAX_VALUE));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         LblInstructorInfo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         LblInstructorInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -356,7 +372,6 @@ public class ViewLessons extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewLessons("C1").setVisible(true);
             }
         });
     }

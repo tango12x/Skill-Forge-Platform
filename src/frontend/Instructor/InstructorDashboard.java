@@ -4,20 +4,69 @@ package frontend.Instructor;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-import frontend.Login;
+import java.util.ArrayList;
+
+import javax.swing.JDialog;
+
+import backend.models.Course;
+import backend.services.InstructorService;
+import frontend.*;
 
 /**
  *
  * @author pc
  */
 public class InstructorDashboard extends javax.swing.JFrame {
+    // Current instructor information
+    private String currentInstructorId;
+    private String currentInstructorName;
+    private InstructorService IS;
+
+    // Table models for dynamic data
+    private javax.swing.table.DefaultTableModel createdCoursesModel;
 
     /**
      * Creates new form InstructorDashboard
      */
-    public InstructorDashboard() {
+    public InstructorDashboard(String instructorId, String instructorName) {
+        this.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.currentInstructorId = instructorId;
+        this.currentInstructorName = instructorName;
+        IS = new InstructorService(instructorId);
         initComponents();
+        initializeTableAndLoadData();
     }
+
+    public void initializeTableAndLoadData() {
+        // Set instructor information in the label
+        LblInstructorInfo.setText("Welcome, " + currentInstructorName + " (ID: " + currentInstructorId + ")");
+
+        // Created courses table model
+        createdCoursesModel = new javax.swing.table.DefaultTableModel(
+                new Object[][] {}, // Empty data initially
+                new String[] { "Course ID", "Title", "Description", "Students Enrolled" } // Column names
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Make all cells non-editable
+                return false;
+            }
+        };
+        myCoursesTable.setModel(createdCoursesModel);
+
+        // Load created courses
+        ArrayList<Course> createdCourses = IS.getCreatedCourses();
+        for (int i = 0; i < createdCourses.size(); i++) {
+            Course c = createdCourses.get(i);
+            createdCoursesModel.addRow(new Object[] {
+                    c.getCourseId(), c.getTitle(),
+                    c.getDescription(), Integer.toString(c.getStudents().size())
+            });
+
+        }
+
+    } // initializeTableAndLoadData
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -278,32 +327,124 @@ public class InstructorDashboard extends javax.swing.JFrame {
     }// GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
+        // Clear existing data from tables
+        createdCoursesModel.setRowCount(0);
+
+        // reload all data
+        initializeTableAndLoadData();
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Data refreshed successfully!",
+                "Refresh Complete", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }// GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnCreateCourseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCreateCourseActionPerformed
-        // TODO add your handling code here:
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+                "Create Course ?",
+                "Confirm addition", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            CourseEditor frame = new CourseEditor(currentInstructorId, this);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+        }
+        // wait for child to finish
+        try {
+            initializeTableAndLoadData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }// GEN-LAST:event_btnCreateCourseActionPerformed
 
     private void btnEditCourseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnEditCourseActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = myCoursesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Please select a course to edit.",
+                    "No Selection", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String courseId = (String) createdCoursesModel.getValueAt(selectedRow, 0);
+        String courseTitle = (String) createdCoursesModel.getValueAt(selectedRow, 1);
+
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to edit the course:\n" + courseTitle + " (ID: " + courseId + ")?",
+                "Confirm Editting", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            CourseEditor frame = new CourseEditor(courseId, currentInstructorId, this);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+        }
+        // wait for child to finish
+        try {
+            initializeTableAndLoadData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }// GEN-LAST:event_btnEditCourseActionPerformed
 
     private void btnViewStudentsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnViewStudentsActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = myCoursesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Please select a course to show students.",
+                    "No Selection", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String courseId = (String) createdCoursesModel.getValueAt(selectedRow, 0);
+        EnrolledStudents frame = new EnrolledStudents(courseId, this);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
     }// GEN-LAST:event_btnViewStudentsActionPerformed
 
     private void btnDeleteCourseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDeleteCourseActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = myCoursesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Please select a course to delete.",
+                    "No Selection", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String courseId = (String) createdCoursesModel.getValueAt(selectedRow, 0);
+        String courseTitle = (String) createdCoursesModel.getValueAt(selectedRow, 1);
+
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to delete the course:\n" + courseTitle + " (ID: " + courseId + ")?\n\n" +
+                        "This action cannot be undone!",
+                "Confirm Delete", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            IS.deleteCourse(courseId);
+            try {
+                initializeTableAndLoadData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }// GEN-LAST:event_btnDeleteCourseActionPerformed
 
     private void btnViewLessonsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnViewLessonsActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = myCoursesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Please select a course to show courses.",
+                    "No Selection", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String courseId = (String) createdCoursesModel.getValueAt(selectedRow, 0);
+        ViewLessons frame = new ViewLessons(courseId, this);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
     }// GEN-LAST:event_btnViewLessonsActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
@@ -339,7 +480,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InstructorDashboard().setVisible(true);
+                new InstructorDashboard("U7","3aa").setVisible(true);
             }
         });
     }
