@@ -12,16 +12,15 @@ public class Question {
     private String explanation;            
     private int points;               
 
-    // Constructor
-    public Question(String questionId, String questionText, ArrayList<String> options, 
-                   int correctOptionIndex, String explanation, int points) {
+    //CLASS CONSTRUCTOR
+    public Question(String questionId, String questionText, ArrayList<String> options,
+                    int correctOptionIndex, String explanation, int points) {
         this.questionId = questionId;
         this.questionText = questionText;
-        this.options = options != null ? options : new ArrayList<>();
+        this.options = (options != null) ? new ArrayList<>(options) : new ArrayList<>();
         this.correctOptionIndex = correctOptionIndex;
-        this.explanation = explanation != null ? explanation : "";
-        this.points = points > 0 ? points : 1;
-    }
+        this.explanation = explanation;
+        this.points = points;}
 
     // Constructor without explanation and points (default values)
     public Question(String questionId, String questionText, ArrayList<String> options, 
