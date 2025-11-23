@@ -56,7 +56,7 @@ public class StudentService {
     // ENROLLED)
     private void getAvailableCoursesAndInstructors() {
         ArrayList<String> enrolledCourseIds = student.getEnrolledCourses();
-        ArrayList<Course> allCourses = Cdb.getAllCourses();
+        ArrayList<Course> allCourses = Cdb.getApprovedCourses();
         for (int i = 0; i < allCourses.size(); i++) {
             String id = allCourses.get(i).getCourseId();
             if (!enrolledCourseIds.contains(id)) {

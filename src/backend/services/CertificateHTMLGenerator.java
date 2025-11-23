@@ -127,7 +127,6 @@ public class CertificateHTMLGenerator {
                "        \n" +
                "        <div class=\"details\">\n" +
                "            <p><strong>Instructor:</strong> " + certificate.getInstructorName() + "</p>\n" +
-               "            <p><strong>Completed on:</strong> " + certificate.getFormattedCompletionDate() + "</p>\n" +
                "            <p><strong>Certificate ID:</strong> " + certificate.getCertificateId() + "</p>\n" +
                "            <p><strong>Issue Date:</strong> " + certificate.getFormattedIssueDate() + "</p>\n" +
                "        </div>\n" +

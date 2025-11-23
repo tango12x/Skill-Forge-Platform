@@ -96,7 +96,6 @@ public class CertificatePDFGenerator {
                 writer.println();
                 writer.println("----------------------------------------------------------------------------------");
                 writer.println("Instructor: " + certificate.getInstructorName());
-                writer.println("Completed: " + certificate.getFormattedCompletionDate());
                 writer.println("Certificate ID: " + certificate.getCertificateId());
                 writer.println("Issue Date: " + certificate.getFormattedIssueDate());
                 writer.println("----------------------------------------------------------------------------------");
@@ -335,9 +334,6 @@ public class CertificatePDFGenerator {
         // Left column
         String instructorText = "Instructor: " + certificate.getInstructorName();
         g2d.drawString(instructorText, centerX - 400, detailsStartY);
-        
-        String completionDateText = "Completed: " + certificate.getFormattedCompletionDate();
-        g2d.drawString(completionDateText, centerX - 400, detailsStartY + 40);
         
         // Right column  
         String certificateIdText = "Certificate ID: " + certificate.getCertificateId();
