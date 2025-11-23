@@ -75,12 +75,13 @@ public class Question {
 
     //REMOVE OPTION FROM OPTIONS THEN UPDATE CORRECT INDEX
     public void removeOption(int index) {
-        if (options != null && index >= 0 && index < options.size()) {
-            if (index == correctOptionIndex) {
-                correctOptionIndex = -1;
-            } else if (index < correctOptionIndex) {
-                correctOptionIndex--;}
-            options.remove(index);}}
+        if (options == null || index < 0 || index >= options.size()) {
+            return;}
+        if (index == correctOptionIndex) {
+           correctOptionIndex = -1;  } 
+        else if (correctOptionIndex > index && correctOptionIndex > 0) {
+           correctOptionIndex--;}
+        options.remove(index);}
 
     // Validation methods
     public boolean isValid() {
