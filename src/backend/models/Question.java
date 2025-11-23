@@ -12,7 +12,7 @@ public class Question {
     private String explanation;            
     private int points;               
 
-    //CLASS CONSTRUCTOR
+    //FULL CLASS CONSTRUCTOR
     public Question(String questionId, String questionText, ArrayList<String> options,
                     int correctOptionIndex, String explanation, int points) {
         this.questionId = questionId;
@@ -21,6 +21,14 @@ public class Question {
         this.correctOptionIndex = correctOptionIndex;
         this.explanation = explanation;
         this.points = points;}
+
+    // CONSTRUCTOR TO DEAL WITH JSON
+    public Question() {
+        this.options = new ArrayList<>();
+        this.explanation = "";
+        this.points = 1;
+        this.correctOptionIndex = -1;}
+    
 
     // CLASS CONSTRUCTOR WITH NO EXPLANATION AND DEFAULT POINTS VALUE
     public Question(String questionId, String questionText, ArrayList<String> options, 
