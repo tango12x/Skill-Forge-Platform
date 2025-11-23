@@ -63,6 +63,12 @@ public class Question {
         if (correctOptionIndex >= 0 && correctOptionIndex < options.size()) {
             return options.get(correctOptionIndex);}
         return "";}
+    //SHUFFLING THE OPTIONS 
+    public void shuffleOptions() {
+        if (options != null && options.size() > 1) {
+            String correctAnswer = options.get(correctOptionIndex);
+            Collections.shuffle(options);
+            correctOptionIndex = options.indexOf(correctAnswer);}}
 
 
     public void removeOption(int index) {
