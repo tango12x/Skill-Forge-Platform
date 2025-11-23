@@ -53,41 +53,17 @@ public class Question {
     public void setPoints(int points) {
         this.points = points > 0 ? points : 1;}
 
-    
+    //CLASS METHODS 
+
+    //CHECK IF THE CHOSEN OPTION MAPS TO THE CORRECT ANSWER 
     public boolean isCorrectAnswer(int selectedIndex) {
         return selectedIndex == correctOptionIndex;}
-
-    public boolean isCorrectAnswer(String selectedOption) {
-        return selectedOption != null && 
-               selectedOption.equals(options.get(correctOptionIndex));
-    }
-
+    //RETURNS THE CORRECT ANSWER USING CORRECT OPTION INDEX
     public String getCorrectAnswerText() {
         if (correctOptionIndex >= 0 && correctOptionIndex < options.size()) {
-            return options.get(correctOptionIndex);
-        }
-        return "";
-    }
+            return options.get(correctOptionIndex);}
+        return "";}
 
-    public void shuffleOptions() {
-        if (options != null && options.size() > 1) {
-            String correctAnswer = options.get(correctOptionIndex);
-            Collections.shuffle(options);
-            // Update correct option index after shuffling
-            correctOptionIndex = options.indexOf(correctAnswer);
-        }
-    }
-
-    public void addOption(String option) {
-        if (option != null && !option.trim().isEmpty()) {
-            if (options == null) {
-                options = new ArrayList<>();
-            }
-            if (!options.contains(option)) {
-                options.add(option);
-            }
-        }
-    }
 
     public void removeOption(int index) {
         if (options != null && index >= 0 && index < options.size()) {
