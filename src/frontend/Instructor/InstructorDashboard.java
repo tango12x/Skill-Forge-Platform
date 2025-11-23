@@ -401,9 +401,9 @@ public class InstructorDashboard extends javax.swing.JFrame {
         }
         String courseId = (String) createdCoursesModel.getValueAt(selectedRow, 0);
         EnrolledStudents frame = new EnrolledStudents(courseId, this);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(this);
+        frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
     }// GEN-LAST:event_btnViewStudentsActionPerformed
 
     private void btnDeleteCourseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDeleteCourseActionPerformed
@@ -437,7 +437,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
         int selectedRow = myCoursesTable.getSelectedRow();
         if (selectedRow == -1) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Please select a course to show courses.",
+                    "Please select a course to show lessons.",
                     "No Selection", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }

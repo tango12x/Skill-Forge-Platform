@@ -194,10 +194,22 @@
   },
   {
     "courseId": "C16",
-    "title": "rr",
+    "title": "rrhhh",
     "instructorId": "U7",
     "description": "rr",
-    "lessons": [],
+    "lessons": [
+      {
+        "lessonId": "L1",
+        "title": "gg",
+        "content": "ggg",
+        "courseId": "C16",
+        "optionalResources": [
+          "ggg",
+          "gggg",
+          "gggggggggggggggggggggggggggggg"
+        ]
+      }
+    ],
     "students": []
   }
 ]

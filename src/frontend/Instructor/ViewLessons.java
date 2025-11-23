@@ -25,8 +25,8 @@ public class ViewLessons extends JDialog {
      */
     public ViewLessons(String courseId, JFrame parent) {
         super(parent, "Dialog", true);
-        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(parent);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.courseId = courseId;
         this.Title = "";
         // name of label is not right
@@ -39,8 +39,8 @@ public class ViewLessons extends JDialog {
     // This constructor is specific for CourseEditor usage
     public ViewLessons(String courseId, JDialog parent) {
         super(parent, "Dialog", true);
-        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(parent);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.courseId = courseId;
         this.Title = "";
         // name of label is not right
