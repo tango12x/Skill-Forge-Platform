@@ -1,5 +1,12 @@
 [
     {
+        "role": "admin",
+        "userId": "U0",
+        "email": "admin@system.com",
+        "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+        "username": "Admin"
+    },
+    {
         "role": "student",
         "enrolledCourses": [],
         "progress": [],
@@ -61,7 +68,10 @@
     },
     {
         "role": "instructor",
-        "createdCourses": ["C3","C7"],
+        "createdCourses": [
+            "C3",
+            "C7"
+        ],
         "userId": "U8",
         "email": "email2",
         "passwordHash": "passwordHash2",
@@ -210,12 +220,14 @@
             "C10",
             "C9",
             "C2",
-            "C3"
+            "C3",
+            "C6"
         ],
         "progress": [
             [],
             [],
             ["L1"],
+            [],
             [],
             [],
             [],
