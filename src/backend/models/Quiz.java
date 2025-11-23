@@ -97,6 +97,11 @@ public class Quiz {
         if (question != null && question.isValid()) {
             questions.add(question);}}
     
+    //REMOVING QUESTION FROM QUIZ
+    public boolean removeQuestion(String questionId) {
+        if (questionId == null || questions == null) return false;
+        return questions.removeIf(q -> questionId.equals(q.getQuestionId()));}
+
 
 
 
