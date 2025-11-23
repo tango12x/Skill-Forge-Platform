@@ -48,7 +48,8 @@ public class CourseDatabaseManager {
     // ===========================================
     public Course getCourse(String courseId) {
         int index = SearchCourseIndex(courseId);
-        if (index == -1) return null;
+        if (index == -1)
+            return null;
 
         JSONObject obj = this.courses.getJSONObject(index);
 
@@ -173,15 +174,13 @@ public class CourseDatabaseManager {
             JSONObject obj = jsonArray.getJSONObject(i);
 
             Lesson lesson = new Lesson(
-                obj.getString("lessonId"),
-                obj.getString("title"),
-                obj.getString("courseId"),
-                obj.getString("content")
-            );
+                    obj.getString("lessonId"),
+                    obj.getString("title"),
+                    obj.getString("courseId"),
+                    obj.getString("content"));
 
             lesson.setOptionalResources(
-                JsonDatabaseManager.toStringList(obj.getJSONArray("optionalResources"))
-            );
+                    JsonDatabaseManager.toStringList(obj.getJSONArray("optionalResources")));
 
             lessonsArray.add(lesson);
         }
@@ -256,47 +255,49 @@ public class CourseDatabaseManager {
         }
         return list;
     }
+
     public Course getCourseWithoutLessons(String courseId) {
-    int index = SearchCourseIndex(courseId);
-    if (index == -1) return null;
+        int index = SearchCourseIndex(courseId);
+        if (index == -1)
+            return null;
 
-    JSONObject obj = this.courses.getJSONObject(index);
+        JSONObject obj = this.courses.getJSONObject(index);
 
-    String title = obj.getString("title");
-    String instructorId = obj.getString("instructorId");
-    String description = obj.getString("description");
+        String title = obj.getString("title");
+        String instructorId = obj.getString("instructorId");
+        String description = obj.getString("description");
 
-    // Create simple course object
-    Course c = new Course(courseId, title, instructorId, description);
+        // Create simple course object
+        Course c = new Course(courseId, title, instructorId, description);
 
-    // Set students list
-    JSONArray stdArr = obj.getJSONArray("students");
-    c.setStudents(JsonDatabaseManager.toStringList(stdArr));
+        // Set students list
+        JSONArray stdArr = obj.getJSONArray("students");
+        c.setStudents(JsonDatabaseManager.toStringList(stdArr));
 
-    // Approval status
-    if (obj.has("approvalStatus"))
-        c.setApprovalStatus(obj.getString("approvalStatus"));
-    else
-        c.setApprovalStatus("PENDING");
+        // Approval status
+        if (obj.has("approvalStatus"))
+            c.setApprovalStatus(obj.getString("approvalStatus"));
+        else
+            c.setApprovalStatus("PENDING");
 
-    // DO NOT READ or PARSE lessons
-    c.setLessons(new ArrayList<>());
+        // DO NOT READ or PARSE lessons
+        c.setLessons(new ArrayList<>());
 
-    return c;
-}
-    public ArrayList<Course> getApprovedCoursesWithLessons() {
-    ArrayList<Course> list = new ArrayList<>();
-
-    for (int i = 0; i < courses.length(); i++) {
-        JSONObject obj = courses.getJSONObject(i);
-
-        if (obj.optString("approvalStatus", "PENDING").equals("APPROVED")) {
-            // get course WITH lessons
-            list.add(getCourse(obj.getString("courseId")));
-        }
+        return c;
     }
-    return list;
-}
+
+    public ArrayList<Course> getApprovedCoursesWithLessons() {
+        ArrayList<Course> list = new ArrayList<>();
+
+        for (int i = 0; i < courses.length(); i++) {
+            JSONObject obj = courses.getJSONObject(i);
+
+            if (obj.optString("approvalStatus", "PENDING").equals("APPROVED")) {
+                // get course WITH lessons
+                list.add(getCourse(obj.getString("courseId")));
+            }
+        }
+        return list;
+    }
 
 }
-

@@ -38,6 +38,8 @@ public class UsersDatabaseManager {
                         return ((Student) tempUser);
                     } else if (tempUser.getRole().equals("instructor")) {
                         return ((Instructor) tempUser);
+                    } else if (tempUser.getRole().equals("admin")) {
+                        return ((Admin) tempUser);
                     }
                 }
             }

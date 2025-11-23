@@ -96,5 +96,12 @@
     "username": "3aa",
     "email": "email2",
     "passwordHash": "passwordHash2"
+  },
+  {
+    "userId": "U9",
+    "role": "admin",
+    "username": "3aa",
+    "email": "email2",
+    "passwordHash": "passwordHash2"
   }
 ]

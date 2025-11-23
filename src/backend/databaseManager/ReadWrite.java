@@ -119,7 +119,10 @@ public class ReadWrite {
                                 instructor.setCreatedCourses(new ArrayList<>());
                             }
                             return instructor;
-                            
+                         case "admin":
+                            Admin admin = context.deserialize(jsonObject, Admin.class);
+                            return admin;
+                                
                         default:
                             throw new JsonParseException("Unknown user role: " + role + 
                                 ". Supported roles: 'student', 'instructor'");

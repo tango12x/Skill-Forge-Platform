@@ -1,10 +1,10 @@
 package backend.JsonDatabaseManager;
 
-import backend.ProgramFunctions.AdminManagement.Admin;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import backend.ProgramFunctions.UserAccountManagement.User;
+import backend.models.AdminManagement.Admin;
 import backend.ProgramFunctions.InstructorManagement.Instructor;
 import backend.ProgramFunctions.StudentManagement.Student;
 

@@ -1,8 +1,5 @@
 package backend.models;
 
-package backend.ProgramFunctions.CourseManagement;
-
-import backend.ProgramFunctions.LessonAndLearningFeatures.Lesson;
 import java.util.ArrayList;
 
 public class Course {
@@ -12,9 +9,8 @@ public class Course {
     private String description;
     private ArrayList<Lesson> lessons;
     private ArrayList<String> students;
-
-    // <<< ADDED for Lab 8
-    private String approvalStatus;   // PENDING, APPROVED, REJECTED
+    private String approvalStatus; // PENDING, APPROVED, REJECTED
+    private String approvedBy; // id of admin who approved the course
 
     // CLASS CONSTRUCTOR IN CASE OF DESCRIPTION IS GIVEN
     public Course(String courseId, String title, String instructorId, String description) {
@@ -24,9 +20,8 @@ public class Course {
         this.description = description;
         this.lessons = new ArrayList<Lesson>();
         this.students = new ArrayList<String>();
-
-        // <<< ADDED
         this.approvalStatus = "PENDING";
+        this.approvedBy = null;
     }
 
     // OVERLOADING CONSTRUCTOR IN CASE THAT DESCRIPTION IS NOT GIVEN
@@ -36,9 +31,8 @@ public class Course {
         this.description = description;
         this.lessons = new ArrayList<Lesson>();
         this.students = new ArrayList<String>();
-
-        // <<< ADDED
         this.approvalStatus = "PENDING";
+        this.approvedBy = null;
     }
 
     // standard getters and setters
@@ -86,16 +80,27 @@ public class Course {
         this.description = description;
     }
 
+    public void setApprovedBy(String adminId) {
+        this.approvedBy = adminId;
+    }
+
+    public String getApprovedBy() {
+        return approvedBy;
+    }
+
     // METHOD TO ADD LESSON
     public void addLesson(Lesson lesson) {
-        if (lesson == null) return;
-        if (lessons.contains(lesson)) return;
+        if (lesson == null)
+            return;
+        if (lessons.contains(lesson))
+            return;
         lessons.add(lesson);
     }
 
     // METHOD TO REMOVE LESSON
     public void removeLesson(String lessonId) {
-        if (lessonId == null || lessonId.trim().isEmpty()) return;
+        if (lessonId == null || lessonId.trim().isEmpty())
+            return;
         for (int i = 0; i < lessons.size(); i++) {
             if (lessons.get(i).getLessonId().equals(lessonId)) {
                 lessons.remove(i);
@@ -106,24 +111,35 @@ public class Course {
 
     // METHOD TO EDIT SPECIFIC LESSON
     public void editLesson(String oldLessonId, Lesson newLesson) {
-        if (oldLessonId == null || newLesson == null) return;
-        if (oldLessonId.trim().isEmpty()) return;
+        if (oldLessonId == null || newLesson == null)
+            return;
+        if (oldLessonId.trim().isEmpty())
+            return;
 
         for (int i = 0; i < lessons.size(); i++) {
             if (lessons.get(i).getLessonId().equals(oldLessonId)) {
-                if (!newLesson.getLessonId().equals(oldLessonId)) return;
+                if (!newLesson.getLessonId().equals(oldLessonId))
+                    return;
                 lessons.set(i, newLesson);
                 return;
             }
         }
     }
 
-    public String generateLessonId(){
+    // METHOD TO GENERATE LESSON ID
+    public String generateLessonId() {
         return "L" + String.format("%d", this.lessons.size() + 1);
     }
 
-    //adding students to course
-    public void addStudent(String studentId){
+    // adding students to course
+    public void addStudent(String studentId) {
+        if (studentId == null || studentId.trim().isEmpty())
+            return;
+        if (isStudentEnrolled(studentId))
+            return;
+        students.add(studentId);
+    }
+
     // return if student is enrolled
     public boolean isStudentEnrolled(String studentId) {
         for (String id : students) {
@@ -134,18 +150,26 @@ public class Course {
         return false;
     }
 
-    public void addStudent(String studentId) {
-        if (studentId == null || studentId.trim().isEmpty()) return;
-        if (isStudentEnrolled(studentId)) return;
-        students.add(studentId);
-    }
-
-    // <<< FIXED: These no longer throw unsupported exception
+    // get approval status
     public String getApprovalStatus() {
         return approvalStatus;
     }
 
+    // set approval status
     public void setApprovalStatus(String status) {
-        this.approvalStatus = status;
+        if (status == null || status.trim().isEmpty())
+            return;
+        switch (status) {
+            case "APPROVED":
+                this.approvalStatus = status;
+                break;
+            case "REJECTED":
+                this.approvalStatus = status;
+                break;
+            default:
+                System.out.println("Invalid approval status.");
+                break;
+        }
     }
+    
 }

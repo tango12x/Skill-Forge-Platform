@@ -4,6 +4,9 @@ import backend.models.*;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class CourseDatabaseManager {
     private ArrayList<Course> courses;
     private ReadWrite db;
@@ -20,7 +23,7 @@ public class CourseDatabaseManager {
     public Course getCourse(String courseId) {
         try {
             if (courseId == null) {
-                
+
                 return null;
             }
             if (this.courses.size() == 0) {
@@ -73,7 +76,7 @@ public class CourseDatabaseManager {
                         found = true;
                         // courses.remove(i);
                         // courses.add(updatedCourse);
-                        courses.set(i,updatedCourse);
+                        courses.set(i, updatedCourse);
                         SaveCoursesToFile();
                     }
                 }
@@ -127,6 +130,156 @@ public class CourseDatabaseManager {
     public String generateId() {
         return "C" + String.format("%d", this.courses.size() + 1);
     }
+
+    // APPROVE A COURSE
+    public void approveCourse(String courseId,String adminId) {
+        Course course = getCourse(courseId);
+        if (course == null) {
+            System.out.println("approveCourse: Course not found.");
+            return;
+        }
+        try {
+            course.setApprovalStatus("APPROVED");
+            course.setApprovedBy(adminId);
+            update(course);
+            SaveCoursesToFile();
+            System.out.println("Course ID:" + course.getCourseId() + " approved successfully" +
+            "by admin ID:" + course.getApprovedBy());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // REJECT A COURSE
+    public void rejectCourse(String courseId,String adminId) {
+        Course course = getCourse(courseId);
+        if (course == null) {
+            System.out.println("rejectCourse : Course not found.");
+            return;
+        }
+        try {
+            course.setApprovalStatus("REJECTED");
+            course.setApprovedBy(adminId);
+            update(course);
+            SaveCoursesToFile();
+            System.out.println("Course ID:" + course.getCourseId() + " rejected successfully" +
+            "by admin ID:" + course.getApprovedBy());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // GET PENDING COURSES, returns an empty arraylist if there are no pending
+    // courses
+    public ArrayList<Course> getPendingCourses() {
+        ArrayList<Course> pendingList = new ArrayList<Course>();
+        try {
+            for (int i = 0; i < courses.size(); i++) {
+                Course course = courses.get(i);
+                if (course.getApprovalStatus().equals("PENDING")) {
+                    // the line under is written like that to avoid passing the object as a
+                    // reference
+                    pendingList.add(getCourse(course.getCourseId()));
+                }
+            }
+            System.out.println("returning pending list of courses , size: " + pendingList.size());
+            return pendingList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return pendingList;
+        }
+    }
+
+    // GET APPROVED COURSES, returns an empty arraylist if there are no approved
+    // courses
+    public ArrayList<Course> getApprovedCourses() {
+        ArrayList<Course> approvedList = new ArrayList<Course>();
+        try {
+            for (int i = 0; i < courses.size(); i++) {
+                Course course = courses.get(i);
+                if (course.getApprovalStatus().equals("APPROVED")) {
+                    // the line under is written like that to avoid passing the object as a
+                    // reference
+                    approvedList.add(getCourse(course.getCourseId()));
+                }
+            }
+            System.out.println("returning approved list of courses , size: " + approvedList.size());
+            return approvedList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return approvedList;
+        }
+    }
+
+    // GET REJECTED COURSES, returns an empty arraylist if there are no rejected
+    // courses
+    public ArrayList<Course> getRejectedCourses() {
+        ArrayList<Course> rejectedList = new ArrayList<Course>();
+        try {
+            for (int i = 0; i < courses.size(); i++) {
+                Course course = courses.get(i);
+                if (course.getApprovalStatus().equals("REJECTED")) {
+                    // the line under is written like that to avoid passing the object as a
+                    // reference
+                    rejectedList.add(getCourse(course.getCourseId()));
+                }
+            }
+            System.out.println("returning rejected list of courses , size: " + rejectedList.size());
+            return rejectedList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return rejectedList;
+        }
+    }
+
+
+    //!NTST
+    // // GET COURSE WITHOUT LESSONS
+    // public Course getCourseWithoutLessons(String courseId) {
+    //     int index = SearchCourseIndex(courseId);
+    //     if (index == -1)
+    //         return null;
+
+    //     JSONObject obj = this.courses.getJSONObject(index);
+
+    //     String title = obj.getString("title");
+    //     String instructorId = obj.getString("instructorId");
+    //     String description = obj.getString("description");
+
+    //     // Create simple course object
+    //     Course c = new Course(courseId, title, instructorId, description);
+
+    //     // Set students list
+    //     JSONArray stdArr = obj.getJSONArray("students");
+    //     c.setStudents(JsonDatabaseManager.toStringList(stdArr));
+
+    //     // Approval status
+    //     if (obj.has("approvalStatus"))
+    //         c.setApprovalStatus(obj.getString("approvalStatus"));
+    //     else
+    //         c.setApprovalStatus("PENDING");
+
+    //     // DO NOT READ or PARSE lessons
+    //     c.setLessons(new ArrayList<>());
+
+    //     return c;
+    // }
+
+    // public ArrayList<Course> getApprovedCoursesWithLessons() {
+    //     ArrayList<Course> list = new ArrayList<>();
+
+    //     for (int i = 0; i < courses.length(); i++) {
+    //         JSONObject obj = courses.getJSONObject(i);
+
+    //         if (obj.optString("approvalStatus", "PENDING").equals("APPROVED")) {
+    //             // get course WITH lessons
+    //             list.add(getCourse(obj.getString("courseId")));
+    //         }
+    //     }
+    //     return list;
+    // }
+
+    // ===========================================================================================
 
     // For testing purposes only
     public static void main(String[] args) {
