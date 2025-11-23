@@ -102,7 +102,13 @@ public class Quiz {
         if (questionId == null || questions == null) return false;
         return questions.removeIf(q -> questionId.equals(q.getQuestionId()));}
 
-
+    //GET QUESTION BY QUESTION ID 
+    public Question getQuestion(String questionId) {
+        if (questionId == null || questions == null) return null;
+        for (Question q : questions) {
+            if (questionId.equals(q.getQuestionId())) {
+                return q;}}
+        return null;}
 
 
     
