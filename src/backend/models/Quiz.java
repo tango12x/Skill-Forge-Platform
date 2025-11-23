@@ -16,33 +16,28 @@ public class Quiz {
     private int passingScore;      
     private int maxAttempts;
 
-    // CONSTRUCTOR WITH DEFAULT VALUES 
+    //CLASS CONSTRUCTOR FOR DEALING WITH JSON FILES
+    public Quiz() {
+        this.questions = new ArrayList<>();
+        this.description = "";
+        this.passingScore = 70;
+        this.maxAttempts = 0; }
+
+    //CLASS CONSTRUCTOR 
     public Quiz(String quizId, String lessonId, String title) {
+        this();
         this.quizId = quizId;
         this.lessonId = lessonId;
-        this.title = title;
-        this.description = "";
-        this.questions = new ArrayList<>();
-        this.passingScore = 70;
-        this.maxAttempts = 3;
-    }
+        this.title = title != null ? title.trim() : "Untitled Quiz";}
 
-    // FULL CLASS CONSTRUCTOR
-    public Quiz(String quizId, String lessonId, String title, String description, 
-                 int passingScore, int maxAttempts) {
+    // Full CLASS CONSTRUCTOR
+    public Quiz(String quizId, String lessonId, String title, String description,
+                int passingScore, int maxAttempts) {
         this(quizId, lessonId, title);
         this.description = description != null ? description : "";
         this.passingScore = Math.max(0, Math.min(100, passingScore));
-        this.maxAttempts = Math.max(0, maxAttempts);}
+        this.maxAttempts = Math.max(0, maxAttempts);} //0 ATTEMPS MEAN UNLIMITED ATTEMPS 
 
-    // CONSTRUCTOR TO DEAL WITH JSON
-    public Quiz() {
-        // Required for JSON deserialization
-        this.questions = new ArrayList<>();
-        this.description = "";
-        this.passingScore = 70;
-        this.maxAttempts = 0;
-    }
 
     // GETTERS AND SETTERS
     public String getQuizId() { return quizId; }
