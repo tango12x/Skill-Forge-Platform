@@ -3,221 +3,132 @@ package backend.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Collections;
+import java.util.Objects;
 
 public class Quiz {
+
+    //CLASS ATTRIBUTES 
     private String quizId;
     private String lessonId;
     private String title;
     private String description;
     private ArrayList<Question> questions;
-    private int timeLimit; // in minutes, 0 means no time limit
-    private int passingScore; // percentage required to pass
-    private int maxAttempts; // 0 means unlimited attempts
-    private boolean shuffleQuestions;
-    private boolean shuffleOptions;
-    private Date createdAt;
-    private Date updatedAt;
+    private int passingScore;      
+    private int maxAttempts;
 
-    // Constructors
+    //CLASS CONSTRUCTOR FOR DEALING WITH JSON FILES
+    public Quiz() {
+        this.questions = new ArrayList<>();
+        this.description = "";
+        this.passingScore = 70;
+        this.maxAttempts = 0; }
+
+    //CLASS CONSTRUCTOR 
     public Quiz(String quizId, String lessonId, String title) {
+        this();
         this.quizId = quizId;
         this.lessonId = lessonId;
-        this.title = title;
-        this.description = "";
-        this.questions = new ArrayList<>();
-        this.timeLimit = 0;
-        this.passingScore = 70; // default 70%
-        this.maxAttempts = 3; // default 3 attempts
-        this.shuffleQuestions = false;
-        this.shuffleOptions = false;
-        this.createdAt = new Date();
-        this.updatedAt = new Date();
-    }
+        this.title = title != null ? title.trim() : "Untitled Quiz";}
 
-    public Quiz(String quizId, String lessonId, String title, String description, 
-                int timeLimit, int passingScore, int maxAttempts) {
+    // Full CLASS CONSTRUCTOR
+    public Quiz(String quizId, String lessonId, String title, String description,
+                int passingScore, int maxAttempts) {
         this(quizId, lessonId, title);
         this.description = description != null ? description : "";
-        this.timeLimit = Math.max(0, timeLimit);
         this.passingScore = Math.max(0, Math.min(100, passingScore));
-        this.maxAttempts = Math.max(0, maxAttempts);
-    }
+        this.maxAttempts = Math.max(0, maxAttempts);} //0 ATTEMPS MEAN UNLIMITED ATTEMPS 
 
-    // Getters and Setters
+    // GETTRES AND SETTERS 
     public String getQuizId() { return quizId; }
-    public void setQuizId(String quizId) { 
-        this.quizId = quizId; 
-        this.updatedAt = new Date();
-    }
-
+    public void setQuizId(String quizId) { this.quizId = quizId; }
     public String getLessonId() { return lessonId; }
-    public void setLessonId(String lessonId) { 
-        this.lessonId = lessonId; 
-        this.updatedAt = new Date();
-    }
-
+    public void setLessonId(String lessonId) { this.lessonId = lessonId; }
     public String getTitle() { return title; }
-    public void setTitle(String title) { 
-        this.title = title; 
-        this.updatedAt = new Date();
-    }
-
+    public void setTitle(String title) { this.title = title; }
     public String getDescription() { return description; }
-    public void setDescription(String description) { 
-        this.description = description != null ? description : ""; 
-        this.updatedAt = new Date();
-    }
-
+    public void setDescription(String description) {
+        this.description = description != null ? description : "";}
     public ArrayList<Question> getQuestions() { return questions; }
-    public void setQuestions(ArrayList<Question> questions) { 
-        this.questions = questions != null ? questions : new ArrayList<>(); 
-        this.updatedAt = new Date();
-    }
-
-    public int getTimeLimit() { return timeLimit; }
-    public void setTimeLimit(int timeLimit) { 
-        this.timeLimit = Math.max(0, timeLimit); 
-        this.updatedAt = new Date();
-    }
-
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions != null ? questions : new ArrayList<>();}
     public int getPassingScore() { return passingScore; }
-    public void setPassingScore(int passingScore) { 
-        this.passingScore = Math.max(0, Math.min(100, passingScore)); 
-        this.updatedAt = new Date();
-    }
-
+    public void setPassingScore(int passingScore) {
+        this.passingScore = Math.max(0, Math.min(100, passingScore));}
     public int getMaxAttempts() { return maxAttempts; }
-    public void setMaxAttempts(int maxAttempts) { 
-        this.maxAttempts = Math.max(0, maxAttempts); 
-        this.updatedAt = new Date();
-    }
+    public void setMaxAttempts(int maxAttempts) {
+        this.maxAttempts = Math.max(0, maxAttempts);}
 
-    public boolean isShuffleQuestions() { return shuffleQuestions; }
-    public void setShuffleQuestions(boolean shuffleQuestions) { 
-        this.shuffleQuestions = shuffleQuestions; 
-        this.updatedAt = new Date();
-    }
+    //CLASS METHODS 
 
-    public boolean isShuffleOptions() { return shuffleOptions; }
-    public void setShuffleOptions(boolean shuffleOptions) { 
-        this.shuffleOptions = shuffleOptions; 
-        this.updatedAt = new Date();
-    }
-
-    public Date getCreatedAt() { return createdAt; }
-    public Date getUpdatedAt() { return updatedAt; }
-
-    // Business logic methods
+    //CALCULATE THE TOTAL QUESTION POINTS OF THE QUIZ 
     public int getTotalPoints() {
         int total = 0;
-        for (Question question : questions) {
-            total += question.getPoints();
-        }
-        return total;
-    }
-
+        for (Question q : questions) {
+            total += q.getPoints();}
+        return total;}
+    
+    //RETURN THE NUMBER OF THE QUESTIONS IN THE QUIZ
     public int getQuestionCount() {
-        return questions != null ? questions.size() : 0;
-    }
+        return questions.size();}
 
-    public boolean isPassingScore(int score) {
-        if (questions.isEmpty()) return false;
-        double percentage = (double) score / getTotalPoints() * 100;
-        return percentage >= passingScore;
-    }
+    //EVALUATE QUIZ METHOD
+    public int calculateScore(ArrayList<Integer> answers) {
+    if (answers == null || answers.size() != questions.size()) {
+        return 0;}
+    int score = 0;
+    for (int i = 0; i < questions.size(); i++) {
+        int selectedIndex = answers.get(i); 
+        if (selectedIndex >= 0 && questions.get(i).isCorrectAnswer(selectedIndex)) {
+            score += questions.get(i).getPoints();}}
+    return score;}
 
-    public int calculateScore(ArrayList<Integer> userAnswers) {
-        if (userAnswers == null || questions == null) return 0;
-        
-        int score = 0;
-        int minSize = Math.min(userAnswers.size(), questions.size());
-        
-        for (int i = 0; i < minSize; i++) {
-            if (questions.get(i).isCorrectAnswer(userAnswers.get(i))) {
-                score += questions.get(i).getPoints();
-            }
-        }
-        return score;
-    }
+    //CALCAULATE THE PERCENTAGE OF THE QUIZ
+    public double calculatePercentage(ArrayList<Integer> answers) {
+       int total = getTotalPoints();
+       if (total == 0) return 0.0;
+       return (calculateScore(answers) * 100.0) / total;}
+    
+    //IS PASSING METHOD
+    public boolean isPassed(ArrayList<Integer> answers) {
+       return calculatePercentage(answers) >= passingScore;}
 
-    public int calculateScoreFromStrings(ArrayList<String> userAnswers) {
-        if (userAnswers == null || questions == null) return 0;
-        
-        int score = 0;
-        int minSize = Math.min(userAnswers.size(), questions.size());
-        
-        for (int i = 0; i < minSize; i++) {
-            if (questions.get(i).isCorrectAnswer(userAnswers.get(i))) {
-                score += questions.get(i).getPoints();
-            }
-        }
-        return score;
-    }
-
-    // Question management methods
+    // ADDING QUESTION TO THE QUIZ
     public void addQuestion(Question question) {
         if (question != null && question.isValid()) {
-            if (questions == null) {
-                questions = new ArrayList<>();
-            }
-            questions.add(question);
-            this.updatedAt = new Date();
-        }
-    }
+            questions.add(question);}}
+    
+    //REMOVING QUESTION FROM QUIZ
+    public boolean removeQuestion(String questionId) {
+        if (questionId == null || questions == null) return false;
+        return questions.removeIf(q -> questionId.equals(q.getQuestionId()));}
 
-    public void removeQuestion(String questionId) {
-        if (questions != null && questionId != null) {
-            questions.removeIf(q -> questionId.equals(q.getQuestionId()));
-            this.updatedAt = new Date();
-        }
-    }
-
+    //GET QUESTION BY QUESTION ID 
     public Question getQuestion(String questionId) {
-        if (questions != null && questionId != null) {
-            for (Question q : questions) {
-                if (questionId.equals(q.getQuestionId())) {
-                    return q;
-                }
-            }
-        }
-        return null;
-    }
+        if (questionId == null || questions == null) return null;
+        for (Question q : questions) {
+            if (questionId.equals(q.getQuestionId())) {
+                return q;}}
+        return null;}
 
-    public void shuffleQuiz() {
-        if (shuffleQuestions && questions != null) {
-            Collections.shuffle(questions);
-        }
-        
-        if (shuffleOptions && questions != null) {
-            for (Question question : questions) {
-                question.shuffleOptions();
-            }
-        }
-    }
-
-    // Validation methods
+    //VALIDATION
     public boolean isValid() {
         return quizId != null && !quizId.trim().isEmpty() &&
                lessonId != null && !lessonId.trim().isEmpty() &&
                title != null && !title.trim().isEmpty() &&
-               questions != null && !questions.isEmpty() &&
-               passingScore >= 0 && passingScore <= 100 &&
-               maxAttempts >= 0;
-    }
+               questions != null && !questions.isEmpty();}
 
-    public boolean hasQuestions() {
-        return questions != null && !questions.isEmpty();
-    }
-
+    // TO STRING
     @Override
     public String toString() {
         return "Quiz{" +
                 "quizId='" + quizId + '\'' +
-                ", lessonId='" + lessonId + '\'' +
                 ", title='" + title + '\'' +
-                ", questionCount=" + getQuestionCount() +
-                ", passingScore=" + passingScore +
-                ", maxAttempts=" + maxAttempts +
-                '}';
-    }
+                ", questions=" + questions.size() +
+                ", totalPoints=" + getTotalPoints() +
+                ", passingScore=" + passingScore + "%" +
+                ", maxAttempts=" + (maxAttempts == 0 ? "Unlimited" : maxAttempts) +
+                '}';}
+    
+
+    
 }
