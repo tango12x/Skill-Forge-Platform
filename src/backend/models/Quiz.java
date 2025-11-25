@@ -20,7 +20,7 @@ public class Quiz {
     public Quiz() {
         this.questions = new ArrayList<>();
         this.description = "";
-        this.passingScore = 70;
+        this.passingScore = 50;
         this.maxAttempts = 0; }
 
     //CLASS CONSTRUCTOR 
@@ -72,24 +72,24 @@ public class Quiz {
         return questions.size();}
 
     //EVALUATE QUIZ METHOD
-    public int calculateScore(ArrayList<Integer> answers) {
+    public int calculateScore(ArrayList<String> answers) {
     if (answers == null || answers.size() != questions.size()) {
         return 0;}
     int score = 0;
     for (int i = 0; i < questions.size(); i++) {
-        int selectedIndex = answers.get(i); 
-        if (selectedIndex >= 0 && questions.get(i).isCorrectAnswer(selectedIndex)) {
+        String answer = answers.get(i); 
+        if (questions.get(i).isCorrectAnswer(answer)) {
             score += questions.get(i).getPoints();}}
     return score;}
 
     //CALCAULATE THE PERCENTAGE OF THE QUIZ
-    public double calculatePercentage(ArrayList<Integer> answers) {
+    public double calculatePercentage(ArrayList<String> answers) {
        int total = getTotalPoints();
        if (total == 0) return 0.0;
        return (calculateScore(answers) * 100.0) / total;}
     
     //IS PASSING METHOD
-    public boolean isPassed(ArrayList<Integer> answers) {
+    public boolean isPassed(ArrayList<String> answers) {
        return calculatePercentage(answers) >= passingScore;}
 
     // ADDING QUESTION TO THE QUIZ
