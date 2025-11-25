@@ -83,7 +83,17 @@
         "progress": [
           "L1"
         ],
-        "certificate": null,
+        "certificate": {
+          "certificateId": "CERT-9B808020",
+          "studentId": "U2",
+          "studentName": "Gamal",
+          "courseId": "C17",
+          "courseTitle": "rrr",
+          "instructorName": "3aa",
+          "issueDate": "2025-11-26 00:33:57",
+          "finalScore": 0.0,
+          "certificateUrl": null
+        },
         "quizAttempts": {}
       },
       "C1": {

@@ -4,54 +4,30 @@ import backend.models.*;
 import backend.databaseManager.*;
 import backend.models.Course;
 import backend.models.Lesson;
+import backend.models.Student.studentCourseInfo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
+
+//!NTST
 public class StudentQuizService {
     private String studentId;
-    private Map<String, Map<String, QuizAttempt>> studentAttempts; // courseId -> (quizId -> attempt)
+    private Student student;
+    private UsersDatabaseManager Udb;
     private CourseDatabaseManager Cdb;
 
     public StudentQuizService(String studentId) {
-        this.Cdb = new CourseDatabaseManager();
-        this.studentId = studentId;
-        this.studentAttempts = new HashMap<>();
-        loadStudentAttempts();
-    }
-
-    public static class QuizAttempt {
-        private String quizId;
-        private String lessonId;
-        private ArrayList<String> studentAnswers;
-        private int score;
-        private double percentage;
-        private boolean passed;
-        private String timestamp;
-        private int attemptNumber;
-
-        public QuizAttempt(String quizId, String lessonId, ArrayList<String> studentAnswers, 
-                          int score, double percentage, boolean passed, int attemptNumber) {
-            this.quizId = quizId;
-            this.lessonId = lessonId;
-            this.studentAnswers = studentAnswers;
-            this.score = score;
-            this.percentage = percentage;
-            this.passed = passed;
-            this.attemptNumber = attemptNumber;
-            this.timestamp = java.time.LocalDateTime.now().toString();
+        try {
+            this.Cdb = new CourseDatabaseManager();
+            this.Udb = new UsersDatabaseManager();
+            this.studentId = studentId;
+            this.student = (Student) Udb.getUser(studentId);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // Getters
-        public String getQuizId() { return quizId; }
-        public String getLessonId() { return lessonId; }
-        public ArrayList<String> getStudentAnswers() { return studentAnswers; }
-        public int getScore() { return score; }
-        public double getPercentage() { return percentage; }
-        public boolean isPassed() { return passed; }
-        public String getTimestamp() { return timestamp; }
-        public int getAttemptNumber() { return attemptNumber; }
     }
+
 
     /**
      * Get quiz for a specific lesson
@@ -61,7 +37,11 @@ public class StudentQuizService {
             Course course = Cdb.getCourse(courseId);
             if (course != null) {
                 for (Lesson lesson : course.getLessons()) {
-                    if (lesson.getLessonId().equals(lessonId) && lesson.getQuiz() != null) {
+                    if (lesson.getLessonId().equals(lessonId)) {
+                        if (lesson.getQuiz() == null) {
+                            System.out.println("Lesson " + lessonId + " has no quiz");
+                            return null;
+                        }
                         return lesson.getQuiz();
                     }
                 }
@@ -73,95 +53,51 @@ public class StudentQuizService {
     }
 
     /**
-     * Submit quiz answers and record attempt
+     * Submit quiz answers and record attempt score and mark the lesson as completed
+     * if passed
      */
-    public QuizAttempt submitQuiz(String courseId, String lessonId, Quiz quiz, ArrayList<String> answers) {
+    public double submitQuiz(String courseId, String lessonId, Quiz quiz, ArrayList<String> answers) {
         if (quiz == null || answers == null) {
-            return null;
+            return -1;
         }
 
         // Calculate score
         int score = quiz.calculateScore(answers);
-        double percentage = quiz.calculatePercentage(answers);
         boolean passed = quiz.isPassed(answers);
 
-        // Get attempt number
-        int attemptNumber = getNextAttemptNumber(courseId, quiz.getQuizId());
-
-        // Create attempt record
-        QuizAttempt attempt = new QuizAttempt(
-            quiz.getQuizId(), lessonId, new ArrayList<>(answers),
-            score, percentage, passed, attemptNumber
-        );
-
-        // Store attempt
-        storeAttempt(courseId, quiz.getQuizId(), attempt);
+        student.addQuizAttempt(courseId, lessonId, score);
+        Udb.update(student);
+        Udb.SaveUsersToFile();
 
         // If passed, mark lesson as completed
         if (passed) {
             markLessonAsCompleted(courseId, lessonId);
         }
 
-        return attempt;
-    }
-
-    /**
-     * Get student's attempts for a specific quiz
-     */
-    public ArrayList<QuizAttempt> getQuizAttempts(String courseId, String quizId) {
-        Map<String, QuizAttempt> courseAttempts = studentAttempts.get(courseId);
-        if (courseAttempts != null) {
-            ArrayList<QuizAttempt> attempts = new ArrayList<>(courseAttempts.values());
-            attempts.sort((a1, a2) -> Integer.compare(a2.getAttemptNumber(), a1.getAttemptNumber()));
-            return attempts;
-        }
-        return new ArrayList<>();
-    }
-
-    /**
-     * Get latest attempt for a quiz
-     */
-    public QuizAttempt getLatestAttempt(String courseId, String quizId) {
-        ArrayList<QuizAttempt> attempts = getQuizAttempts(courseId, quizId);
-        return attempts.isEmpty() ? null : attempts.get(0);
+        return score;
     }
 
     /**
      * Check if student can retake quiz (based on max attempts)
      */
     public boolean canRetakeQuiz(String courseId, Quiz quiz) {
-        if (quiz.getMaxAttempts() == 0) return true; // Unlimited attempts
-        
-        QuizAttempt latest = getLatestAttempt(courseId, quiz.getQuizId());
-        if (latest == null) return true;
-        
-        return latest.getAttemptNumber() < quiz.getMaxAttempts();
+        try {
+            if (quiz.getMaxAttempts() == 0)
+                return true; // Unlimited attempts
+            studentCourseInfo info = student.getEnrolledCourses().get(courseId);
+            ArrayList<Integer> attempts = info.getQuizAttempts().get(quiz.getLessonId());
+            if (attempts == null)
+                return true;
+            int numAttempts = attempts.size();
+    
+            return numAttempts < quiz.getMaxAttempts();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
-    /**
-     * Check if student has passed the quiz
-     */
-    public boolean hasPassedQuiz(String courseId, String quizId) {
-        QuizAttempt latest = getLatestAttempt(courseId, quizId);
-        return latest != null && latest.isPassed();
-    }
-
-    /**
-     * Get next attempt number for a quiz
-     */
-    private int getNextAttemptNumber(String courseId, String quizId) {
-        ArrayList<QuizAttempt> attempts = getQuizAttempts(courseId, quizId);
-        return attempts.size() + 1;
-    }
-
-    /**
-     * Store quiz attempt
-     */
-    private void storeAttempt(String courseId, String quizId, QuizAttempt attempt) {
-        studentAttempts.putIfAbsent(courseId, new HashMap<>());
-        studentAttempts.get(courseId).put(quizId + "_attempt_" + attempt.getAttemptNumber(), attempt);
-        saveStudentAttempts();
-    }
 
     /**
      * Mark lesson as completed when quiz is passed
@@ -175,20 +111,4 @@ public class StudentQuizService {
         }
     }
 
-    /**
-     * Load student attempts from persistence
-     */
-    private void loadStudentAttempts() {
-        // This would typically load from JSON file
-        // For now, we'll initialize empty
-        studentAttempts = new HashMap<>();
-    }
-
-    /**
-     * Save student attempts to persistence
-     */
-    private void saveStudentAttempts() {
-        // This would typically save to JSON file
-        // Implementation depends on your JSON structure
-    }
 }

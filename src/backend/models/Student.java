@@ -70,6 +70,10 @@ public class Student extends User {
             return quizAttempts;
         }
 
+        public int numCompleted() {
+            return progress.size();
+        }
+
         // MARK LESSON AS COMPLETE
         public void markLessonComplete(String lessonId) {
             if (lessonId.trim().isEmpty() || lessonId == null) {
@@ -104,11 +108,11 @@ public class Student extends User {
             }
             lessonQuizAttempts.add(score);
             System.out.println("Quiz attempt added successfully for lesson: " + lessonId);
-            if (score >= 70) {
-                markLessonComplete(lessonId);
-                System.out.println("Lesson completed successfully for lesson: " + lessonId
-                        + "as quiz is passed with score: " + score + " for student: " + getUserId());
-            }
+            // if (score >= 70) {
+            //     markLessonComplete(lessonId);
+            //     System.out.println("Lesson completed successfully for lesson: " + lessonId
+            //             + "as quiz is passed with score: " + score + " for student: " + getUserId());
+            // }
         }
 
     }
@@ -146,6 +150,16 @@ public class Student extends User {
         }
         studentCourseInfo newCourseInfo = new studentCourseInfo(courseId);
         enrolledCourses.put(courseId,newCourseInfo);
+    }
+
+    public int numCompleted(String courseId) {
+        if (courseId == null || courseId.trim().isEmpty())
+            return -1;
+        if (!isEnrolled(courseId)) {
+            System.out.println("markLessonComplete: student is not enrolled in course ID:" + courseId);
+            return -1;
+        }
+        return enrolledCourses.get(courseId).numCompleted();
     }
 
     // MARK LESSON AS COMPLETE
