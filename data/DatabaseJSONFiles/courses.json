@@ -10,6 +10,7 @@
         "title": "Lesson 1",
         "content": "Content 1",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       },
       {
@@ -17,6 +18,7 @@
         "title": "Lesson 2",
         "content": "Content 3",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       },
       {
@@ -24,6 +26,7 @@
         "title": "haha",
         "content": "haha ya ",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       },
       {
@@ -31,6 +34,7 @@
         "title": "keke",
         "content": "elel",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       },
       {
@@ -38,6 +42,7 @@
         "title": "d;dd;",
         "content": "d,ld",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       },
       {
@@ -45,6 +50,7 @@
         "title": "llsdss",
         "content": "ksksk",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       },
       {
@@ -52,6 +58,7 @@
         "title": "jfjjfj",
         "content": "kffkf",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       },
       {
@@ -59,6 +66,7 @@
         "title": "ddlldl",
         "content": "dldll",
         "courseId": "C1",
+        "quiz": null,
         "optionalResources": []
       }
     ],
@@ -74,7 +82,9 @@
     "instructorId": "U3",
     "description": "Understand OOP.",
     "lessons": [],
-    "students": [],
+    "students": [
+      "U2"
+    ],
     "approvalStatus": "APPROVED",
     "approvedBy": null
   },
@@ -205,6 +215,7 @@
         "title": "ff",
         "content": "ff",
         "courseId": "C14",
+        "quiz": null,
         "optionalResources": []
       }
     ],
@@ -233,6 +244,7 @@
         "title": "gg",
         "content": "ggg",
         "courseId": "C16",
+        "quiz": null,
         "optionalResources": [
           "ggg",
           "gggg",
@@ -255,12 +267,15 @@
         "title": "rr",
         "content": "rr",
         "courseId": "C17",
+        "quiz": null,
         "optionalResources": [
           "rr"
         ]
       }
     ],
-    "students": [],
+    "students": [
+      "U2"
+    ],
     "approvalStatus": "APPROVED",
     "approvedBy": "U9"
   }

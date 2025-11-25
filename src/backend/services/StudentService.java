@@ -1,8 +1,11 @@
 package backend.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import backend.databaseManager.*;
 import backend.models.*;
+import backend.models.Student.studentCourseInfo;
 
 
 public class StudentService {
@@ -55,11 +58,10 @@ public class StudentService {
     // METHOD TO GET ALL available COURSES AND INSTRUCTORS for a STUDENT (excluding
     // ENROLLED)
     private void getAvailableCoursesAndInstructors() {
-        ArrayList<String> enrolledCourseIds = student.getEnrolledCourses();
         ArrayList<Course> allCourses = Cdb.getApprovedCourses();
         for (int i = 0; i < allCourses.size(); i++) {
             String id = allCourses.get(i).getCourseId();
-            if (!enrolledCourseIds.contains(id)) {
+            if (!student.getEnrolledCourses().containsKey(id)) {
                 availableCourses.add(Cdb.getCourse(id));
                 Course course = Cdb.getCourse(id);
                 Instructor instructor = (Instructor) Udb.getUser(course.getInstructorId());
@@ -71,11 +73,10 @@ public class StudentService {
     // METHOD TO GET ALL available COURSES AND INSTRUCTORS for a STUDENT (excluding
     // ENROLLED)
     private void getEnrolledCoursesAndInstructors() {
-        ArrayList<String> enrolledCourseIds = student.getEnrolledCourses();
         ArrayList<Course> allCourses = Cdb.getAllCourses();
         for (int i = 0; i < allCourses.size(); i++) {
             String id = allCourses.get(i).getCourseId();
-            if (enrolledCourseIds.contains(id)) {
+            if (student.getEnrolledCourses().containsKey(id)) {
                 enrolledCourses.add(Cdb.getCourse(id));
                 Course course = Cdb.getCourse(id);
                 Instructor instructor = (Instructor) Udb.getUser(course.getInstructorId());
@@ -115,8 +116,7 @@ public class StudentService {
 
     //METHOD TO RETURN IDs OF COMPLETED LESSONS
     public ArrayList<String> getCompletedLesson(String courseID) {
-        int id = student.findCourseIndex(courseID);
-        return student.getProgress().get(id);
+        return student.getEnrolledCourses().get(courseID).getProgress();
     }
 
     //NOT IMPORTANT AS EVERYTHING IS ALWAYS REFRESHED 
@@ -149,8 +149,5 @@ public class StudentService {
     }
     public ArrayList<Instructor> getEnrolledInstructors() {
         return enrolledInstructors;
-    }
-    public ArrayList<ArrayList<String>> getProgress() {
-        return student.getProgress();
     }
 }

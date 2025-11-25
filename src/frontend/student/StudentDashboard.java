@@ -547,7 +547,6 @@ public class StudentDashboard extends javax.swing.JFrame {
         ArrayList<Instructor> availableInstructors = SS.getAvailableInstructors();
         ArrayList<Course> enrolledCourses = SS.getEnrolledCourses();
         ArrayList<Instructor> enrolledInstructors = SS.getEnrolledInstructors();
-        ArrayList<ArrayList<String>> progress = SS.getProgress();
         for (int i = 0; i < availableCourses.size(); i++) {
             Course avCrs = availableCourses.get(i);
             availableCoursesModel.addRow(new Object[] {
@@ -559,7 +558,7 @@ public class StudentDashboard extends javax.swing.JFrame {
             Course enCrs = enrolledCourses.get(i);
             //for progress
             int numLessons = enCrs.getLessons().size();
-            int numCompleted = progress.get(i).size();
+            int numCompleted = SS.getCompletedLesson(enCrs.getCourseId()).size();
             int percentage = numLessons == 0 ? 0 : (numCompleted * 100) / numLessons;
         //     String shown_progress  = Integer.toString(numCompleted) + 
                                 //     " completed out of " + 
@@ -579,17 +578,15 @@ public class StudentDashboard extends javax.swing.JFrame {
      * ========================================================================
      */
     private void loadLessons(String courseId) {
-        //!NTST
         lessonsModel.setRowCount(0); // Clear existing lessons
         ArrayList<Course> enrolledCourses = SS.getEnrolledCourses();
-        ArrayList<ArrayList<String>> progress = SS.getProgress();
         for (int i = 0; i < enrolledCourses.size(); i++) {
             if((enrolledCourses.get(i).getCourseId()).equals(courseId)){
                 for (int j = 0; j < enrolledCourses.get(i).getLessons().size(); j++) {
                     courseIdForCurrentLesson = courseId;
                     Lesson l = enrolledCourses.get(i).getLessons().get(j);
                     System.out.println("lesson got");
-                    String finished = progress.get(i).contains(l.getLessonId())?
+                    String finished = SS.getCompletedLesson(courseId).contains(l.getLessonId())?
                     "Completed":"Uncompleted" ;
                     lessonsModel.addRow(new Object[] {
                     finished, l.getLessonId(),
