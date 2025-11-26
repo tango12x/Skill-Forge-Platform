@@ -244,7 +244,7 @@ public class QuizFrame extends JFrame {
     }
 
     private void showQuizResults(double score , Quiz quiz) {
-        boolean isPassed = score >= quiz.getPassingScore();
+        boolean isPassed = (score >= quiz.getPassingScore());
 
         // Create results dialog
         JDialog resultsDialog = new JDialog(this, "Quiz Results", true);
