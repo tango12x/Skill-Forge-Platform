@@ -11,6 +11,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import backend.models.*;
+import backend.models.Student.studentCourseInfo;
 import backend.models.parents.User;
 
 /**
@@ -37,7 +38,6 @@ public class ReadWrite {
      * - Handles dates consistently
      */
     public ReadWrite() {
-        //! VERY ERROR PRONE!!!!!!!!!!!!!!!!!!!!!!
         // Custom type adapter for collections that returns empty lists instead of null
         TypeAdapter<Collection> collectionAdapter = new TypeAdapter<Collection>() {
             @Override
@@ -105,13 +105,7 @@ public class ReadWrite {
                             Student student = context.deserialize(jsonObject, Student.class);
                             // Ensure collections are never null
                             if (student.getEnrolledCourses() == null) {
-                                student.setEnrolledCourses(new ArrayList<String>());
-                            }
-                            if (student.getProgress() == null) {
-                                student.setProgress(new ArrayList<ArrayList<String>>());
-                            }
-                            if (student.getCertificates() == null) {
-                                student.setCertificates(new ArrayList<Certificate>());
+                                student.setEnrolledCourses(new HashMap<String, studentCourseInfo>());
                             }
                             return student;
                             
@@ -119,7 +113,7 @@ public class ReadWrite {
                             Instructor instructor = context.deserialize(jsonObject, Instructor.class);
                             // Ensure collections are never null
                             if (instructor.getCreatedCourses() == null) {
-                                instructor.setCreatedCourses(new ArrayList<>());
+                                instructor.setCreatedCourses(new ArrayList<String>());
                             }
                             return instructor;
                          case "admin":

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JDialog;
 
 import backend.models.*;
+import backend.models.Student.studentCourseInfo;
 import frontend.util.ProgressBarRenderer;
 import backend.databaseManager.*;
 
@@ -70,15 +71,9 @@ public class EnrolledStudents extends javax.swing.JDialog {
 
         // Populate table
         for (int i = 0; i < students.size(); i++) {
+            //!NTST
             s = students.get(i);
-            int id = -1;
-            for (int j = 0; j < s.getEnrolledCourses().size(); j++) {
-                if (courseId.equals(s.getEnrolledCourses().get(j))) {
-                    id = j;
-                    break;
-                }
-            }
-            int numCompleted = s.getProgress().get(id).size();
+            int numCompleted = s.getEnrolledCourses().get(courseId).getProgress().size();
             int numLessons = course.getLessons().size();
             int percentage = numLessons == 0 ? 0 : (numCompleted * 100) / numLessons;
             studentsModel.addRow(new Object[] {

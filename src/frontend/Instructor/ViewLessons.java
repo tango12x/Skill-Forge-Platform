@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import backend.models.*;
 import backend.databaseManager.*;
@@ -335,6 +336,7 @@ public class ViewLessons extends JDialog {
         }
     }// GEN-LAST:event_btnDeleteLessonActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
@@ -373,6 +375,7 @@ public class ViewLessons extends JDialog {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
             }
         });
     }
